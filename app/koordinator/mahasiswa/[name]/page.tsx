@@ -1,3 +1,5 @@
+"use client"
+
 import Loading from "@/components/Loading";
 import { useRouter } from "next/navigation";
 import WithAuth from "@/components/WithAuth";
