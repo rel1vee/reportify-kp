@@ -40,8 +40,12 @@ export default function RootLayout({
   const [nama, setNama] = useState<string>("");
   const [nim, setNim] = useState<string>("");
   const [instansiList, setInstansiList] = useState<Instansi[]>([]);
-  const [pembimbingInstansiList, setPembimbingInstansiList] = useState<PembimbingInstansi[]>([]);
-  const [dosenPembimbingList, setDosenPembimbingList] = useState<DosenPembimbing[]>([]);
+  const [pembimbingInstansiList, setPembimbingInstansiList] = useState<
+    PembimbingInstansi[]
+  >([]);
+  const [dosenPembimbingList, setDosenPembimbingList] = useState<
+    DosenPembimbing[]
+  >([]);
 
   const [profil, setProfil] = useState<Profil>({
     instansi: "",
@@ -446,7 +450,6 @@ export default function RootLayout({
               </ul>
             </div>
           </div>
-
           {/* Logout Button */}
           <div>
             <ul>

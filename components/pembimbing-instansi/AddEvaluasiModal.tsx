@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { IDailyReport } from "@/models/DailyReport";
+import NotificationPopup from "@/components/NotificationPopUp";
 
 interface EvaluasiModalProps {
   isOpen: boolean;
@@ -17,6 +18,10 @@ const AddEvaluasiModal = ({
   const [komentar, setKomentar] = useState("");
   const [isAccepted, setIsAccepted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [notification, setNotification] = useState<{
+    message: string;
+    type: "success" | "error" | "warning" | "info";
+  } | null>(null);
 
   if (!isOpen || !dailyReport) return null;
 
@@ -42,10 +47,16 @@ const AddEvaluasiModal = ({
       });
 
       if (!response.ok) {
-        const errorData = await response.json();
-        alert(`Error: ${errorData.message}`);
+        await response.json();
+        setNotification({
+          message: "Terjadi kesalahan pada server!",
+          type: "error",
+        });
       } else {
-        alert("Evaluasi berhasil disimpan!");
+        setNotification({
+          message: "Evaluasi berhasil disimpan!",
+          type: "success",
+        });
         onClose();
       }
     } catch (error) {
@@ -56,6 +67,15 @@ const AddEvaluasiModal = ({
   };
 
   return (
+    <>
+    {/* Popup Notification */}
+    {notification && (
+        <NotificationPopup
+          message={notification.message}
+          type={notification.type}
+          onClose={() => setNotification(null)}
+        />
+      )}
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
       <div className="relative w-full max-w-md p-6 bg-white rounded-xl shadow-lg">
         <button
@@ -109,6 +129,7 @@ const AddEvaluasiModal = ({
         </button>
       </div>
     </div>
+    </>
   );
 };
 

@@ -23,7 +23,6 @@ const PickRolePage = () => {
           sesuai...
         </p>
       </div>
-
       <div className="grid md:grid-cols-2 gap-8 w-full max-w-4xl">
         <button
           onClick={() => handleRoleSelect("dosen-pembimbing")}
@@ -44,7 +43,6 @@ const PickRolePage = () => {
             </span>
           </div>
         </button>
-
         <button
           onClick={() => handleRoleSelect("pembimbing-instansi")}
           className="group bg-white rounded-xl shadow-md hover:shadow-xl p-8 transition-all duration-300 hover:-translate-y-1 relative overflow-hidden"
@@ -57,7 +55,6 @@ const PickRolePage = () => {
             <h2 className="text-2xl font-semibold text-gray-900 mb-3">
               Pembimbing Instansi
             </h2>
-
             <span className="flex items-center text-gray-900 font-medium">
               Masuk ke Dashboard
               <ArrowRight className="ml-2 w-4 h-4 transform group-hover:translate-x-2 transition-transform duration-300" />

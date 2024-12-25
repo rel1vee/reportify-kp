@@ -417,7 +417,6 @@ const AddTaskModal = ({ isOpen, onClose }: AddTaskModalProps) => {
                   </button>
                 </div>
               </div>
-
               <div
                 ref={scrollRef}
                 className="flex overflow-x-auto hide-scrollbar gap-3"
@@ -546,7 +545,6 @@ const AddTaskModal = ({ isOpen, onClose }: AddTaskModalProps) => {
                 className="w-full border rounded-md p-2 text-sm focus:ring-2 focus:ring-blue-200 focus:border-blue-400 outline-none"
               />
             </div>
-
             {/* deskripsiAgenda Input */}
             <div className="space-y-1">
               <label

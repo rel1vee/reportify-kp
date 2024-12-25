@@ -6,7 +6,7 @@ import WithAuth from "@/components/WithAuth";
 import React, { useEffect, useState } from "react";
 import FAQModal from "@/components/mahasiswa/FAQsModal";
 
-const DashboardMahasiswa = () => {
+const DashboardMahasiswaPage = () => {
   const [totalDays, setTotalDays] = useState(0);
   const [currentDay, setCurrentDay] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
@@ -196,4 +196,4 @@ const DashboardMahasiswa = () => {
   );
 };
 
-export default WithAuth(DashboardMahasiswa, ["mahasiswa"]);
+export default WithAuth(DashboardMahasiswaPage, ["mahasiswa"]);

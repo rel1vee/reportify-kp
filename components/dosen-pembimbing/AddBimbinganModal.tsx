@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import NotificationPopup from "@/components/NotificationPopUp";
+
 
 interface AddBimbinganModalProps {
   isOpen: boolean;
@@ -11,6 +13,10 @@ const AddBimbinganModal = ({ isOpen, onClose }: AddBimbinganModalProps) => {
   const [komentar, setKomentar] = useState("");
   const [tanggal, setTanggal] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [notification, setNotification] = useState<{
+    message: string;
+    type: "success" | "error" | "warning" | "info";
+  } | null>(null);
 
   if (!isOpen) return null;
 
@@ -19,7 +25,7 @@ const AddBimbinganModal = ({ isOpen, onClose }: AddBimbinganModalProps) => {
     setIsLoading(true);
 
     const payload = {
-      nip: localStorage.getItem("nip") || "196401196401", // Get NIP from localStorage
+      nip: localStorage.getItem("nip") || "196401196401",
       tanggal: new Date(tanggal),
       komentar: komentar,
       status: "Diterima",
@@ -36,28 +42,38 @@ const AddBimbinganModal = ({ isOpen, onClose }: AddBimbinganModalProps) => {
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.message || "Gagal menyimpan bimbingan");
+        throw new Error(errorData.message || "Gagal menyimpan bimbingan.");
       }
 
-      // Show success message
-      alert("Bimbingan berhasil disimpan!");
+      setNotification({
+        message: "Bimbingan berhasil disimpan!",
+        type: "success",
+      });
       onClose();
 
       // Optional: Refresh the page or update the bimbingan list
       window.location.reload();
     } catch (error) {
       console.error("Error:", error);
-      alert(
-        error instanceof Error
-          ? error.message
-          : "Terjadi kesalahan saat menyimpan bimbingan."
-      );
+      setNotification({
+        message: "Terjadi kesalahan pada server.",
+        type: "error",
+      });
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
+    <>
+    {/* Popup Notification */}
+    {notification && (
+        <NotificationPopup
+          message={notification.message}
+          type={notification.type}
+          onClose={() => setNotification(null)}
+        />
+      )}
     <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
       <div className="bg-white rounded-xl shadow-lg sm:max-w-[500px] w-[90%] p-6 space-y-6">
         <h2 className="text-xl font-semibold">Beri Evaluasi Bimbingan KP</h2>
@@ -107,6 +123,7 @@ const AddBimbinganModal = ({ isOpen, onClose }: AddBimbinganModalProps) => {
         </form>
       </div>
     </div>
+    </>
   );
 };
 

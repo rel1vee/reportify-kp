@@ -41,7 +41,6 @@ const BimbinganModal = ({
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       {/* Backdrop */}
       <div className="fixed inset-0 bg-black/50" onClick={onClose} />
-
       {/* Modal Content */}
       <div className="relative bg-white rounded-xl w-full max-w-3xl mx-4 p-8 z-50 shadow-lg">
         {/* Header */}
@@ -50,7 +49,6 @@ const BimbinganModal = ({
             Review Bimbingan
           </h3>
         </div>
-
         {/* Content */}
         <div className="space-y-6">
           <div className="text-center mb-8">
@@ -58,7 +56,6 @@ const BimbinganModal = ({
               {mahasiswa.judulKP}
             </h2>
           </div>
-
           <div className="space-y-4">
             {/* NIM and Status */}
             <div className="flex flex-col gap-2">
@@ -77,13 +74,11 @@ const BimbinganModal = ({
                 </div>
               </div>
             </div>
-
             {/* Nama Mahasiswa */}
             <div className="space-y-2">
               <div className="text-sm text-gray-500">NAMA MAHASISWA</div>
               <div className="font-medium text-gray-700">{mahasiswa.nama}</div>
             </div>
-
             {/* Dosen Pembimbing */}
             <div className="space-y-2">
               <div className="text-sm text-gray-500">DOSEN PEMBIMBING</div>
@@ -91,7 +86,6 @@ const BimbinganModal = ({
                 {mahasiswa.dosenPembimbing}
               </div>
             </div>
-
             {/* Pembimbing Instansi */}
             <div className="space-y-2">
               <div className="text-sm text-gray-500">PEMBIMBING INSTANSI</div>
@@ -99,7 +93,6 @@ const BimbinganModal = ({
                 {mahasiswa.pembimbingInstansi}
               </div>
             </div>
-
             <div className="border-t mt-6 pt-6">
               {/* Evaluasi Bimbingan */}
               <div className="text-sm text-gray-500 mb-2">
@@ -114,7 +107,6 @@ const BimbinganModal = ({
             </div>
           </div>
         </div>
-
         {/* Close Button */}
         <button
           onClick={onClose}
