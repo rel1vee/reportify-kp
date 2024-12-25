@@ -122,7 +122,6 @@ const LandingPage = () => {
             dan melaporkan kegiatan Kerja Praktik secara efisien dan
             profesional.
           </p>
-
           <motion.div
             whileHover={{ scale: 1.02 }}
             className="flex justify-center items-center space-x-4 mb-8 md:mb-10"
@@ -135,7 +134,6 @@ const LandingPage = () => {
               <ArrowRight size={18} />
             </button>
           </motion.div>
-
           <div className="flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-8 opacity-90">
             {[
               { icon: Star, text: "Mudah Digunakan" },
