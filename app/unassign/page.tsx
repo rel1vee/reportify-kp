@@ -10,6 +10,7 @@ const UnassignPage = () => {
 
   const handleLogin = () => {
     if (keycloak.authenticated) {
+      localStorage.clear();
       keycloak.logout({
         redirectUri: window.location.origin,
       });

@@ -18,7 +18,7 @@ const WithAuth = <P extends object>(
     }
 
     const roles: string[] =
-      keycloak.tokenParsed?.resource_access?.["test"]?.roles || [];
+      keycloak.tokenParsed?.resource_access?.["reportify-kp"]?.roles || [];
 
     const hasRole = roles.some((role) => allowedRoles.includes(role));
 

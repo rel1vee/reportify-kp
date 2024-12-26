@@ -22,7 +22,7 @@ const LandingPage = () => {
       const email: string = keycloak.tokenParsed?.email;
       const nama: string = keycloak.tokenParsed?.name;
       const role: string[] =
-        keycloak.tokenParsed?.resource_access?.["test"]?.roles || [];
+        keycloak.tokenParsed?.resource_access?.["reportify-kp"]?.roles || [];
 
       localStorage.setItem("email", email);
       localStorage.setItem("nama", nama);
@@ -50,7 +50,7 @@ const LandingPage = () => {
       saveAkunToDB();
 
       const roles: string[] =
-        keycloak.tokenParsed?.resource_access?.["test"]?.roles || [];
+        keycloak.tokenParsed?.resource_access?.["reportify-kp"]?.roles || [];
 
       if (roles.includes("koordinator")) {
         window.location.href = "/koordinator";
