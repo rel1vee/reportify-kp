@@ -116,7 +116,6 @@ const DashboardDosenPembimbingPage = () => {
     return words.length > 1 ? words[0][0] + words[1][0] : words[0][0];
   };
 
-  // Group students by company
   const groupedStudents: GroupedStudents = students.reduce((acc, student) => {
     if (!acc[student.instansi]) {
       acc[student.instansi] = [];

@@ -36,7 +36,6 @@ const PickRolePage = () => {
             <h2 className="text-2xl font-semibold text-gray-900 mb-3">
               Dosen Pembimbing
             </h2>
-
             <span className="flex items-center text-gray-900 font-medium">
               Masuk ke Dashboard
               <ArrowRight className="ml-2 w-4 h-4 transform group-hover:translate-x-2 transition-transform duration-300" />

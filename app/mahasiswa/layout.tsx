@@ -179,25 +179,17 @@ export default function RootLayout({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
+
       if (response.ok) {
         setNotification({
           message: "Profile updated successfully!",
           type: "success",
         });
 
-        setProfil((prevProfil) => ({
-          ...prevProfil,
-          instansi: formData.instansi,
-          pembimbingInstansi: formData.pembimbingInstansi,
-          dosenPembimbing: formData.dosenPembimbing,
-        }));
-
-        // Tunggu sebentar sebelum menutup
         setTimeout(() => {
           toggleModal();
         }, 1000);
 
-        // Optional: Refresh the page
         window.location.reload();
       } else {
         setNotification({
@@ -557,17 +549,16 @@ export default function RootLayout({
                           value={formData.instansi}
                           onChange={handleInstansiChange}
                         >
-                          <option value="" disabled>
-                            Pilih Instansi
-                          </option>
-                          {instansiList?.map((instansi) => (
-                            <option
-                              key={instansi._id}
-                              value={instansi.instansi}
-                            >
-                              {instansi.instansi}
-                            </option>
-                          ))}
+                          <option value="">Pilih Instansi</option>
+                          {Array.isArray(instansiList) &&
+                            instansiList.map((instansi) => (
+                              <option
+                                key={instansi._id}
+                                value={instansi.instansi}
+                              >
+                                {instansi.instansi}
+                              </option>
+                            ))}
                         </select>
                       </div>
                     </div>
@@ -583,17 +574,16 @@ export default function RootLayout({
                           onChange={handleInputChange}
                           className="w-full border rounded-xl px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
                         >
-                          <option value="" disabled>
-                            Pilih Pembimbing Instansi
-                          </option>
-                          {pembimbingInstansiList?.map((pembimbing) => (
-                            <option
-                              key={pembimbing._id}
-                              value={pembimbing.nama}
-                            >
-                              {pembimbing.nama}
-                            </option>
-                          ))}
+                          <option value="">Pilih Pembimbing Instansi</option>
+                          {Array.isArray(pembimbingInstansiList) &&
+                            pembimbingInstansiList.map((pembimbing) => (
+                              <option
+                                key={pembimbing._id}
+                                value={pembimbing.nama}
+                              >
+                                {pembimbing.nama}
+                              </option>
+                            ))}
                         </select>
                       </div>
                     </div>
@@ -609,14 +599,13 @@ export default function RootLayout({
                           onChange={handleInputChange}
                           className="w-full border rounded-xl px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none overflow-y-auto"
                         >
-                          <option value="" disabled>
-                            Pilih Dosen Pembimbing
-                          </option>
-                          {dosenPembimbingList?.map((dosen) => (
-                            <option key={dosen._id} value={dosen.nama}>
-                              {dosen.nama}
-                            </option>
-                          ))}
+                          <option value="">Pilih Dosen Pembimbing</option>
+                          {Array.isArray(dosenPembimbingList) &&
+                            dosenPembimbingList.map((dosen) => (
+                              <option key={dosen._id} value={dosen.nama}>
+                                {dosen.nama}
+                              </option>
+                            ))}
                         </select>
                       </div>
                     </div>

@@ -96,8 +96,8 @@ const RiwayatBimbinganPage = () => {
   if (!mahasiswaData) {
     return (
       <div className="flex h-screen bg-white items-center justify-center">
-        <div className="text-xl text-gray-600">
-          Dosen Belum Menambahkan Bimbingan...
+        <div className="text-xl font-bold text-gray-600">
+          Update profile kamu terlebih dahulu...
         </div>
       </div>
     );
@@ -106,7 +106,7 @@ const RiwayatBimbinganPage = () => {
   if (error) {
     return (
       <div className="flex h-screen bg-white items-center justify-center">
-        <div className="text-xl text-red-600">Error: {error}</div>
+        <div className="text-xl font-bold text-red-600">Error: {error}</div>
       </div>
     );
   }

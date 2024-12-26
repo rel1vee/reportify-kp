@@ -101,7 +101,6 @@ class MahasiswaController {
         return NextResponse.json(mahasiswa, { status: 200 });
       }
 
-      // Jika tidak ada parameter, kembalikan semua mahasiswa
       const allMahasiswa = await Mahasiswa.findAll();
       return NextResponse.json(allMahasiswa, { status: 200 });
     } catch (error) {

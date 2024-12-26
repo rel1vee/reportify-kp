@@ -8,7 +8,7 @@ export interface IAkun extends Document {
 
 const AkunSchema = new Schema<IAkun>(
   {
-    email: { type: String, required: true },
+    email: { type: String, required: true, unique: true },
     nama: { type: String, required: true },
     role: { type: [String], required: false },
   },

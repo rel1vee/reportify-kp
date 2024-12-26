@@ -17,14 +17,10 @@ const WithAuth = <P extends object>(
       return <Loading />;
     }
 
-    if (!keycloak.authenticated) {
-      return router.push("/");
-    }
-
-    const resourceRoles =
+    const roles: string[] =
       keycloak.tokenParsed?.resource_access?.["test"]?.roles || [];
 
-    const hasRole = resourceRoles.some((role) => allowedRoles.includes(role));
+    const hasRole = roles.some((role) => allowedRoles.includes(role));
 
     if (!hasRole) {
       return router.push("/unauthorized");

@@ -1,13 +1,7 @@
 import React from "react";
 import { useEffect, useState } from "react";
 
-interface LoadingProps {
-  text?: string;
-  primaryColor?: string;
-  secondaryColor?: string;
-}
-
-const Loading: React.FC<LoadingProps> = ({
+const Loading = ({
   text = "Loading",
   primaryColor = "#2C707B",
   secondaryColor = "#397480",

@@ -236,7 +236,6 @@ const AddTaskModal = ({ isOpen, onClose }: AddTaskModalProps) => {
           type: "success",
         });
 
-        // Reset form setelah sukses
         setAgendaList([]);
         setAgenda({
           waktuMulai: "",
@@ -247,7 +246,6 @@ const AddTaskModal = ({ isOpen, onClose }: AddTaskModalProps) => {
           files: [],
         });
 
-        // Tunggu sebentar sebelum menutup
         setTimeout(() => {
           onClose();
         }, 1000);

@@ -17,16 +17,20 @@ class AkunController {
     try {
       const { email, nama, role } = await req.json();
       const existingAkun = await Akun.findByEmail(email);
+
       if (existingAkun) {
         return NextResponse.json(existingAkun, { status: 200 });
       }
+
       const newAkun = await Akun.create({ email, nama, role });
       return NextResponse.json(newAkun, { status: 201 });
     } catch (error) {
       console.error("Error creating Akun:", error);
+
       if (error instanceof Error) {
         return NextResponse.json({ message: error.message }, { status: 500 });
       }
+
       return NextResponse.json(
         { message: "Unknown error occurred." },
         { status: 500 }
@@ -42,16 +46,17 @@ class AkunController {
 
       if (role) {
         const akunByRole = await Akun.findByRole(role);
+
         if (akunByRole.length === 0) {
           return NextResponse.json(
             { message: `No Akun found with role: ${role}` },
             { status: 404 }
           );
         }
+
         return NextResponse.json(akunByRole, { status: 200 });
       }
 
-      // Jika tidak ada parameter, kembalikan pesan error
       return NextResponse.json(
         {
           message: "Invalid query parameter.",
@@ -60,9 +65,11 @@ class AkunController {
       );
     } catch (error) {
       console.error("Error fetching Akun:", error);
+
       if (error instanceof Error) {
         return NextResponse.json({ message: error.message }, { status: 500 });
       }
+
       return NextResponse.json(
         { message: "Unknown error occurred." },
         { status: 500 }

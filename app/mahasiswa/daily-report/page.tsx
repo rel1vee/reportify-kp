@@ -49,11 +49,12 @@ interface ITask {
   status: string;
 }
 
-
 const DailyReportPage = () => {
   const [currentDate, setCurrentDate] = useState("");
   const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
-  const [selectedTaskIndex, setSelectedTaskIndex] = useState<number | null>(null);
+  const [selectedTaskIndex, setSelectedTaskIndex] = useState<number | null>(
+    null
+  );
   const [mahasiswaData, setMahasiswaData] = useState<IMahasiswa | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -189,8 +190,8 @@ const DailyReportPage = () => {
   if (!mahasiswaData) {
     return (
       <div className="flex h-screen bg-white items-center justify-center">
-        <div className="text-xl text-gray-600">
-          Anda Belum Membuat Laporan...
+        <div className="text-xl font-bold text-gray-600">
+          Update profile kamu terlebih dahulu...
         </div>
       </div>
     );
@@ -199,14 +200,14 @@ const DailyReportPage = () => {
   if (error) {
     return (
       <div className="flex h-screen bg-white items-center justify-center">
-        <div className="text-xl text-red-600">
-          Error: {error}
-        </div>
+        <div className="text-xl font-bold text-red-600">Error: {error}</div>
       </div>
     );
   }
 
-  const tasks = mahasiswaData ? convertToTasks(mahasiswaData.reports, evaluasiData): [];
+  const tasks = mahasiswaData
+    ? convertToTasks(mahasiswaData.reports, evaluasiData)
+    : [];
 
   return (
     <div className="flex-1 h-screen overflow-y-auto w-full bg-white">

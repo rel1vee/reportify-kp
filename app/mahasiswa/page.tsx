@@ -109,7 +109,7 @@ const DashboardMahasiswaPage = () => {
           <p className="text-[#C5C5C5] mt-2 text-sm sm:text-base">
             Awali hari ini dengan semangat dan dedikasi! Setiap langkah kecil
             yang Anda ambil dalam mengisi <i>Daily Report</i> membawa Anda lebih
-            dekat ke kesuksesan. Terus belajar dan berkembang!
+            dekat menuju kesuksesan. Terus belajar dan berkembang!
           </p>
         </div>
         {/* Info Boxes */}

@@ -30,7 +30,6 @@ const UnassignPage = () => {
             Status Akun
           </h1>
         </div>
-
         {/* Icon and Status Section */}
         <div className="space-y-6 mb-8">
           <div className="flex justify-center">
@@ -38,19 +37,16 @@ const UnassignPage = () => {
               <MessageCircleQuestion className="text-blue-500 w-12 h-12 md:w-16 md:h-16 animate-pulse drop-shadow-md" />
             </div>
           </div>
-
           <div className="space-y-3">
             <h2 className="text-lg md:text-xl font-bold text-blue-800">
               Menunggu Konfirmasi Koordinator KP
             </h2>
-
             <p className="text-blue-600/80 text-sm md:text-base">
               Hubungi Koordinator KP untuk memberikan anda akses ke dalam sistem
               ini.
             </p>
           </div>
         </div>
-
         {/* Back Button */}
         <motion.button
           onClick={handleLogin}

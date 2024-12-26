@@ -19,21 +19,21 @@ const LandingPage = () => {
 
   const saveAkunToDB = async () => {
     if (keycloak.authenticated) {
-      const email = keycloak.tokenParsed?.email || "";
-      const nama = keycloak.tokenParsed?.name || "";
-      const roles =
+      const email: string = keycloak.tokenParsed?.email;
+      const nama: string = keycloak.tokenParsed?.name;
+      const role: string[] =
         keycloak.tokenParsed?.resource_access?.["test"]?.roles || [];
 
       localStorage.setItem("email", email);
       localStorage.setItem("nama", nama);
 
-      if (email && nama && roles.length > 0) {
+      if (email && nama && role.length > 0) {
         await fetch("/api/akun", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ email, nama, role: roles }),
+          body: JSON.stringify({ email, nama, role: role }),
         });
       }
     }
@@ -49,7 +49,7 @@ const LandingPage = () => {
     if (keycloak.authenticated) {
       saveAkunToDB();
 
-      const roles =
+      const roles: string[] =
         keycloak.tokenParsed?.resource_access?.["test"]?.roles || [];
 
       if (roles.includes("koordinator")) {
@@ -69,7 +69,7 @@ const LandingPage = () => {
         window.location.href = "/unassign";
       }
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [keycloak.authenticated]);
 
   if (isLoading) {

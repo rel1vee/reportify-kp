@@ -5,14 +5,14 @@ import { CheckCircle2, XCircle, AlertTriangle, Info, X } from "lucide-react";
 interface NotificationPopupProps {
   message: string;
   onClose: () => void;
-  type?: "success" | "error" | "warning" | "info";
+  type: "success" | "error" | "warning" | "info";
   duration?: number;
 }
 
 const NotificationPopup: React.FC<NotificationPopupProps> = ({
   message,
   onClose,
-  type = "success",
+  type,
   duration = 5000,
 }) => {
   const notificationConfig = {
@@ -58,7 +58,7 @@ const NotificationPopup: React.FC<NotificationPopupProps> = ({
       className={`
         fixed top-4 right-4 z-[9999] 
         ${config.bgColor} ${config.borderColor}
-        border-l-4 rounded-lg shadow-2xl 
+        border-l-4 rounded-xl shadow-2xl 
         overflow-hidden
       `}
     >
