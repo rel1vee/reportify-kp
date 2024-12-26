@@ -2,18 +2,37 @@
 
 import Loading from "@/components/Loading";
 import { use, useEffect, useState } from "react";
-import { IDailyReport } from "@/models/DailyReport";
 import { User, FileText, Calendar, Plus } from "lucide-react";
-import { IEvaluasiDailyReport } from "@/models/EvaluasiDailyReport";
 import ReviewModal from "@/components/pembimbing-instansi/ReviewModal";
 import AddEvaluasiModal from "@/components/pembimbing-instansi/AddEvaluasiModal";
 import WithAuth from "@/components/WithAuth";
 
-interface Student {
+interface IEvaluasiDailyReport {
+  dailyReportId?: string;
+  pembimbingInstansiId: string;
+  komentar: string;
+  status: string;
+}
+
+interface IAgenda {
+  waktuMulai: string;
+  waktuSelesai: string;
+  judulAgenda: string;
+  deskripsiAgenda: string;
+  files: string[];
+}
+
+interface IDailyReport {
   _id: string;
-  nama: string;
-  nim: string;
+  tanggal: Date | string;
+  agenda?: IAgenda[];
+}
+
+interface IMahasiswa {
+  _id: string;
   email: string;
+  nim: string;
+  nama: string;
   judulKP: string;
   instansi: string;
   pembimbingInstansi: string;
@@ -22,14 +41,13 @@ interface Student {
   selesaiKP: string;
   reports: IDailyReport[];
 }
-
 interface PageProps {
   params: Promise<{ id: string }>;
 }
 
 const DailyReportMahasiswaPage = ({ params }: PageProps) => {
   const { id } = use(params);
-  const [student, setStudent] = useState<Student | null>(null);
+  const [student, setStudent] = useState<IMahasiswa | null>(null);
   const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
   const [isEvaluasiModalOpen, setIsEvaluasiModalOpen] = useState(false);
   const [selectedTaskIndex, setSelectedTaskIndex] = useState<number | null>(
@@ -56,8 +74,8 @@ const DailyReportMahasiswaPage = ({ params }: PageProps) => {
           throw new Error("Failed to fetch student data.");
 
         const students = await studentResponse.json();
-        const currentStudent = students.find((s: Student) => s._id === id);
-        if (!currentStudent) throw new Error("Student not found.");
+        const currentStudent = students.find((s: IMahasiswa) => s._id === id);
+        if (!currentStudent) throw new Error("Mahasiswa not found.");
 
         setStudent(currentStudent);
 
@@ -147,7 +165,7 @@ const DailyReportMahasiswaPage = ({ params }: PageProps) => {
       (evaluasi) =>
         evaluasi.dailyReportId?.toString() === report._id?.toString()
     );
-    const firstAgenda = report.agenda?.[0];
+    const firstAgenda = report.agenda && report.agenda.length > 0 ? report.agenda[0] : null;
 
     return {
       task: firstAgenda?.judulAgenda || "No Agenda.",
@@ -310,8 +328,14 @@ const DailyReportMahasiswaPage = ({ params }: PageProps) => {
           <ReviewModal
             isOpen={isReviewModalOpen}
             onClose={() => setIsReviewModalOpen(false)}
-            dailyReport={student.reports[selectedTaskIndex]}
-            studentInfo={student}
+            dailyReport={{
+              ...student.reports[selectedTaskIndex],
+              _id: student.reports[selectedTaskIndex]._id.toString()
+            }}
+            studentInfo={{
+              ...student,
+              _id: student._id.toString()
+            }}
           />
           <AddEvaluasiModal
             isOpen={isEvaluasiModalOpen}
@@ -319,8 +343,10 @@ const DailyReportMahasiswaPage = ({ params }: PageProps) => {
               setIsEvaluasiModalOpen(false);
               setSelectedTaskIndex(null);
             }}
-            dailyReport={student.reports[selectedTaskIndex]}
-          />
+dailyReport={{
+              ...student.reports[selectedTaskIndex],
+              _id: student.reports[selectedTaskIndex]._id.toString()
+            }}          />
         </>
       )}
     </div>

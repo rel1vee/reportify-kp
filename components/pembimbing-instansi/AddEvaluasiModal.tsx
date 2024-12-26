@@ -1,8 +1,21 @@
 "use client";
 
 import { useState } from "react";
-import { IDailyReport } from "@/models/DailyReport";
 import NotificationPopup from "@/components/NotificationPopUp";
+
+interface IAgenda {
+  waktuMulai: string;
+  waktuSelesai: string;
+  judulAgenda: string;
+  deskripsiAgenda: string;
+  files: string[];
+}
+
+interface IDailyReport {
+  _id: string;
+  tanggal: Date | string;
+  agenda?: IAgenda[];
+}
 
 interface EvaluasiModalProps {
   isOpen: boolean;
@@ -32,7 +45,7 @@ const AddEvaluasiModal = ({
 
     const payload = {
       dailyReportId: dailyReport._id,
-      pembimbingInstansiId: nip, // Replace with NIP in localStorage
+      nip: nip, 
       komentar: komentar,
       status: isAccepted ? "Diterima" : "Belum",
     };
