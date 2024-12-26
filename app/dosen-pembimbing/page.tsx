@@ -1,8 +1,8 @@
 "use client";
 
+import Loading from "@/components/Loading";
 import WithAuth from "@/components/WithAuth";
 import React, { useEffect, useState } from "react";
-import Loading from "@/components/Loading";
 import { IDailyReport } from "@/models/DailyReport";
 
 interface Student {

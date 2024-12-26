@@ -69,7 +69,6 @@ class DailyReportController {
         );
       }
 
-      // Create daily report
       const dailyReportData = {
         tanggal: new Date(tanggal),
         agenda: agenda.map((item: AgendaItem) => ({
