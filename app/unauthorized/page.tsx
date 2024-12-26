@@ -5,14 +5,7 @@ import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { Lock, ArrowLeft } from "lucide-react";
 
-interface UnauthorizedPageProps {
-  message?: string;
-  showHomeButton?: boolean;
-}
-
-const UnauthorizedPage: React.FC<UnauthorizedPageProps> = ({
-  message = "Maaf, Anda tidak memiliki izin untuk mengakses halaman ini.",
-}) => {
+const UnauthorizedPage = () => {
   const router = useRouter();
 
   const handleGoBack = () => {
@@ -44,7 +37,7 @@ const UnauthorizedPage: React.FC<UnauthorizedPageProps> = ({
           Akses Ditolak
         </h1>
         <p className="text-gray-600 mb-6 text-base leading-relaxed">
-          {message}
+          Maaf, Anda tidak memiliki izin untuk mengakses halaman ini.
         </p>
         <div className="flex flex-col sm:flex-row justify-center gap-4">
           <motion.button
