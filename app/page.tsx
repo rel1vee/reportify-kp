@@ -84,7 +84,7 @@ const LandingPage = () => {
         transition={{ duration: 0.5 }}
         className="p-4 md:p-6 flex justify-between items-center"
       >
-        <div className="flex items-center space-x-3">
+        <div className="flex items-center space-x-2 md:space-x-3">
           <Image
             width={48}
             height={48}
@@ -125,11 +125,11 @@ const LandingPage = () => {
           </p>
           <motion.div
             whileHover={{ scale: 1.02 }}
-            className="flex justify-center items-center space-x-4 mb-8 md:mb-10"
+            className="flex justify-center items-center mb-8 md:mb-10"
           >
             <button
               onClick={handleLogin}
-              className="justify-center w-2/3 md:w-1/2 px-4 md:px-6 py-2 md:py-3 rounded-full bg-white text-[#2C5F8D] flex items-center space-x-2 hover:bg-opacity-90 transition-all"
+              className="justify-center w-3/4 md:w-1/2 px-4 md:px-6 py-2 md:py-3 rounded-full bg-white text-[#2C5F8D] flex items-center space-x-2 hover:bg-opacity-90 transition-all"
             >
               <span className="text-sm md:text-base">Mulai Sekarang</span>
               <ArrowRight size={18} />

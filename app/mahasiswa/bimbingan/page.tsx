@@ -115,7 +115,7 @@ const RiwayatBimbinganPage = () => {
     <div className="flex-1 h-screen overflow-y-auto w-full bg-white">
       <div className="px-7 lg:px-8 pt-16 lg:pt-0">
         <div className="my-8">
-          <h1 className="text-xl sm:text-2xl font-bold">Bimbingan KP</h1>
+          <h1 className="text-xl sm:text-2xl font-bold">Bimbingan Kerja Praktik</h1>
           <p className="text-[#C5C5C5]">{currentDate}</p>
         </div>
         {/* Unified layout for all screen sizes */}
