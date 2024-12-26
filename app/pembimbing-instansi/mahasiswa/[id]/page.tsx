@@ -79,27 +79,27 @@ const DailyReportMahasiswaPage = ({ params }: PageProps) => {
 
         setStudent(currentStudent);
 
-         // Fetch evaluasi data
-         const evalResponse = await fetch(`/api/evaluasi`);
-         if (!evalResponse.ok) throw new Error("Failed to fetch evaluasi data.");
-         const evaluations: IEvaluasiDailyReport[] = await evalResponse.json();
-         setEvaluasiData(evaluations);
- 
-         // Match evaluations to reports
-         const matchedReports = currentStudent.reports.map(
-           (report: IDailyReport) => {
-             const matchedEvaluation = evaluations.find(
-               (evalItem) => evalItem.dailyReportId === report._id
-             );
-             return {
-               ...report,
-               status: matchedEvaluation?.status || "Belum dievaluasi",
-               komentar: matchedEvaluation?.komentar || "",
-             };
-           }
-         );
- 
-         setStudent({ ...currentStudent, reports: matchedReports });
+        // Fetch evaluasi data
+        const evalResponse = await fetch(`/api/evaluasi`);
+        if (!evalResponse.ok) throw new Error("Failed to fetch evaluasi data.");
+        const evaluations: IEvaluasiDailyReport[] = await evalResponse.json();
+        setEvaluasiData(evaluations);
+
+        // Match evaluations to reports
+        const matchedReports = currentStudent.reports.map(
+          (report: IDailyReport) => {
+            const matchedEvaluation = evaluations.find(
+              (evalItem) => evalItem.dailyReportId === report._id
+            );
+            return {
+              ...report,
+              status: matchedEvaluation?.status || "Belum dievaluasi",
+              komentar: matchedEvaluation?.komentar || "",
+            };
+          }
+        );
+
+        setStudent({ ...currentStudent, reports: matchedReports });
       } catch (err) {
         setError(err instanceof Error ? err.message : "An error occurred");
       } finally {
@@ -165,7 +165,8 @@ const DailyReportMahasiswaPage = ({ params }: PageProps) => {
       (evaluasi) =>
         evaluasi.dailyReportId?.toString() === report._id?.toString()
     );
-    const firstAgenda = report.agenda && report.agenda.length > 0 ? report.agenda[0] : null;
+    const firstAgenda =
+      report.agenda && report.agenda.length > 0 ? report.agenda[0] : null;
 
     return {
       task: firstAgenda?.judulAgenda || "No Agenda.",
@@ -309,7 +310,7 @@ const DailyReportMahasiswaPage = ({ params }: PageProps) => {
                             onClick={(e) => handleCommentClick(index, e)}
                             className="flex items-center gap-2 px-4 py-2 bg-[#397480] text-white text-xs lg:text-base rounded-full transition-colors hover:scale-105"
                           >
-                            <Plus size={16}/>
+                            <Plus size={16} />
                             <span>Evaluasi</span>
                           </button>
                         )}
@@ -330,11 +331,11 @@ const DailyReportMahasiswaPage = ({ params }: PageProps) => {
             onClose={() => setIsReviewModalOpen(false)}
             dailyReport={{
               ...student.reports[selectedTaskIndex],
-              _id: student.reports[selectedTaskIndex]._id.toString()
+              _id: student.reports[selectedTaskIndex]._id.toString(),
             }}
             studentInfo={{
               ...student,
-              _id: student._id.toString()
+              _id: student._id.toString(),
             }}
           />
           <AddEvaluasiModal
@@ -343,10 +344,11 @@ const DailyReportMahasiswaPage = ({ params }: PageProps) => {
               setIsEvaluasiModalOpen(false);
               setSelectedTaskIndex(null);
             }}
-dailyReport={{
+            dailyReport={{
               ...student.reports[selectedTaskIndex],
-              _id: student.reports[selectedTaskIndex]._id.toString()
-            }}          />
+              _id: student.reports[selectedTaskIndex]._id.toString(),
+            }}
+          />
         </>
       )}
     </div>
