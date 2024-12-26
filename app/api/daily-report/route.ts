@@ -138,43 +138,43 @@ class DailyReportController {
     }
   }
 
-  async delete(req: Request) {
-    await this.connectDB();
-    try {
-      const { searchParams } = new URL(req.url);
-      const _id = searchParams.get("_id");
+  // async delete(req: Request) {
+  //   await this.connectDB();
+  //   try {
+  //     const { searchParams } = new URL(req.url);
+  //     const _id = searchParams.get("_id");
 
-      if (!_id) {
-        return NextResponse.json(
-          { message: "ID (_id) is required" },
-          { status: 400 }
-        );
-      }
+  //     if (!_id) {
+  //       return NextResponse.json(
+  //         { message: "ID (_id) is required" },
+  //         { status: 400 }
+  //       );
+  //     }
 
-      const deletedDailyReport = await DailyReport.delete(_id);
+  //     const deletedDailyReport = await DailyReport.delete(_id);
 
-      if (!deletedDailyReport) {
-        return NextResponse.json(
-          { message: "DailyReport not found" },
-          { status: 404 }
-        );
-      }
+  //     if (!deletedDailyReport) {
+  //       return NextResponse.json(
+  //         { message: "DailyReport not found" },
+  //         { status: 404 }
+  //       );
+  //     }
 
-      return NextResponse.json(
-        { message: "DailyReport deleted successfully" },
-        { status: 200 }
-      );
-    } catch (error) {
-      console.error("Error deleting DailyReport:", error);
-      if (error instanceof Error) {
-        return NextResponse.json({ message: error.message }, { status: 500 });
-      }
-      return NextResponse.json(
-        { message: "Unknown error occurred." },
-        { status: 500 }
-      );
-    }
-  }
+  //     return NextResponse.json(
+  //       { message: "DailyReport deleted successfully" },
+  //       { status: 200 }
+  //     );
+  //   } catch (error) {
+  //     console.error("Error deleting DailyReport:", error);
+  //     if (error instanceof Error) {
+  //       return NextResponse.json({ message: error.message }, { status: 500 });
+  //     }
+  //     return NextResponse.json(
+  //       { message: "Unknown error occurred." },
+  //       { status: 500 }
+  //     );
+  //   }
+  // }
 }
 
 const dailyReportController = new DailyReportController();
@@ -191,6 +191,6 @@ export async function PUT(req: Request) {
   return dailyReportController.update(req);
 }
 
-export async function DELETE(req: Request) {
-  return dailyReportController.delete(req);
-}
+// export async function DELETE(req: Request) {
+//   return dailyReportController.delete(req);
+// }

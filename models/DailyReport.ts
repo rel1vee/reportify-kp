@@ -1,4 +1,4 @@
-import { Document, Schema, model, models, Types, QueryOptions } from "mongoose";
+import { Document, Schema, model, Types, models, QueryOptions } from "mongoose";
 
 export interface IDailyReport extends Document {
   _id: Types.ObjectId;
@@ -14,15 +14,15 @@ export interface IDailyReport extends Document {
 
 const AgendaSchema = new Schema(
   {
-    waktuMulai: { type: String, required: [true, "Waktu mulai diperlukan."] },
+    waktuMulai: { type: String, required: true },
     waktuSelesai: {
       type: String,
-      required: [true, "Waktu selesai diperlukan"],
+      required: true,
     },
-    judulAgenda: { type: String, required: [true, "Judul agenda diperlukan."] },
+    judulAgenda: { type: String, required: true },
     deskripsiAgenda: {
       type: String,
-      required: [true, "Deskripsi agenda diperlukan."],
+      required: true,
     },
     files: [{ type: String }],
   },
@@ -45,13 +45,13 @@ DailyReportSchema.set("toJSON", {
   },
 });
 
-export const DailyReportModel = models.DailyReport || model<IDailyReport>("DailyReport", DailyReportSchema);
+export const DailyReportModel =
+  models.DailyReport || model<IDailyReport>("DailyReport", DailyReportSchema);
 
 class DailyReportClass {
   private model;
 
   constructor() {
-    
     this.model = DailyReportModel;
   }
 
@@ -75,9 +75,9 @@ class DailyReportClass {
     return this.model.findByIdAndUpdate(id, data, { new: true });
   }
 
-  async delete(id: string): Promise<IDailyReport | null> {
-    return this.model.findByIdAndDelete(id);
-  }
+  // async delete(id: string): Promise<IDailyReport | null> {
+  //   return this.model.findByIdAndDelete(id);
+  // }
 
   async findByIdAndUpdate(
     id: string,

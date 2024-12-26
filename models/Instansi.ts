@@ -33,7 +33,8 @@ class InstansiClass {
   private model;
 
   constructor() {
-    this.model = models.Instansi || model<IInstansi>("Instansi", InstansiSchema);
+    this.model =
+      models.Instansi || model<IInstansi>("Instansi", InstansiSchema);
   }
 
   async create(data: Partial<IInstansi>): Promise<IInstansi> {

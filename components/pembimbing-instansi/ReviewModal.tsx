@@ -96,6 +96,7 @@ const Documentation = ({ agenda }: { agenda?: IAgenda[] }) => (
     <div className="grid grid-cols-2 gap-4">
       {agenda?.map((ag, agendaIndex) =>
         ag.files?.map((fileUrl, fileIndex) => (
+          // eslint-disable-next-line @next/next/no-img-element
           <img
             key={`dokumentasi-${agendaIndex}-${fileIndex}`}
             src={fileUrl}

@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import React, { forwardRef, useEffect, useState } from "react";
 
 interface IEvaluasiDailyReport {

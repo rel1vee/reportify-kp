@@ -70,6 +70,7 @@ const ReviewModal = ({
       setError(null);
       fetchEvaluasi();
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen, dailyReport]);
 
   const startEditing = () => {
@@ -300,6 +301,7 @@ const ReviewModal = ({
                 <div className="grid grid-cols-2 gap-4">
                   {dailyReport.agenda?.map((ag, agendaIndex) =>
                     ag.files?.map((fileUrl, fileIndex) => (
+                      // eslint-disable-next-line @next/next/no-img-element
                       <img
                         key={`dokumentasi-${agendaIndex}-${fileIndex}`}
                         src={fileUrl}

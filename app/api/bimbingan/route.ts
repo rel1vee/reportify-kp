@@ -2,6 +2,13 @@ import MongoDB from "@/libs/mongodb";
 import { NextResponse } from "next/server";
 import Bimbingan from "@/models/Bimbingan";
 
+interface BimbinganValidation {
+  nip: string;
+  tanggal: Date | string;
+  komentar: string;
+  status: string;
+}
+
 class BimbinganController {
   async connectDB() {
     try {
@@ -29,8 +36,13 @@ class BimbinganController {
     }
   }
 
-  validateCreatePayload(data: any) {
-    const requiredFields = ["nip", "tanggal", "komentar", "status"];
+  validateCreatePayload(data: Partial<BimbinganValidation>) {
+    const requiredFields: (keyof BimbinganValidation)[] = [
+      "nip",
+      "tanggal",
+      "komentar",
+      "status",
+    ];
 
     for (const field of requiredFields) {
       if (!data[field]) {
@@ -48,7 +60,6 @@ class BimbinganController {
       if (validationError) {
         return NextResponse.json({ message: validationError }, { status: 400 });
       }
-
       const newBimbingan = await Bimbingan.create(data);
       return NextResponse.json(newBimbingan, { status: 201 });
     } catch (error) {
@@ -97,43 +108,43 @@ class BimbinganController {
     }
   }
 
-  async delete(req: Request) {
-    await this.connectDB();
-    try {
-      const { searchParams } = new URL(req.url);
-      const _id = searchParams.get("_id");
+  // async delete(req: Request) {
+  //   await this.connectDB();
+  //   try {
+  //     const { searchParams } = new URL(req.url);
+  //     const _id = searchParams.get("_id");
 
-      if (!_id) {
-        return NextResponse.json(
-          { message: "ID (_id) is required" },
-          { status: 400 }
-        );
-      }
+  //     if (!_id) {
+  //       return NextResponse.json(
+  //         { message: "ID (_id) is required" },
+  //         { status: 400 }
+  //       );
+  //     }
 
-      const deletedBimbingan = await Bimbingan.delete(_id);
+  //     const deletedBimbingan = await Bimbingan.delete(_id);
 
-      if (!deletedBimbingan) {
-        return NextResponse.json(
-          { message: "Bimbingan not found" },
-          { status: 404 }
-        );
-      }
+  //     if (!deletedBimbingan) {
+  //       return NextResponse.json(
+  //         { message: "Bimbingan not found" },
+  //         { status: 404 }
+  //       );
+  //     }
 
-      return NextResponse.json(
-        { message: "Bimbingan deleted successfully" },
-        { status: 200 }
-      );
-    } catch (error) {
-      console.error("Error deleting Bimbingan:", error);
-      if (error instanceof Error) {
-        return NextResponse.json({ message: error.message }, { status: 500 });
-      }
-      return NextResponse.json(
-        { message: "Unknown error occurred.." },
-        { status: 500 }
-      );
-    }
-  }
+  //     return NextResponse.json(
+  //       { message: "Bimbingan deleted successfully" },
+  //       { status: 200 }
+  //     );
+  //   } catch (error) {
+  //     console.error("Error deleting Bimbingan:", error);
+  //     if (error instanceof Error) {
+  //       return NextResponse.json({ message: error.message }, { status: 500 });
+  //     }
+  //     return NextResponse.json(
+  //       { message: "Unknown error occurred.." },
+  //       { status: 500 }
+  //     );
+  //   }
+  // }
 }
 
 const bimbinganController = new BimbinganController();
@@ -150,6 +161,6 @@ export async function PUT(req: Request) {
   return bimbinganController.update(req);
 }
 
-export async function DELETE(req: Request) {
-  return bimbinganController.delete(req);
-}
+// export async function DELETE(req: Request) {
+//   return bimbinganController.delete(req);
+// }

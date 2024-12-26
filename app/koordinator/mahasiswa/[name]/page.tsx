@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import Loading from "@/components/Loading";
 import { useRouter } from "next/navigation";
@@ -100,7 +100,6 @@ const MahasiswaPage = ({ params }: { params: Promise<{ name: string }> }) => {
             {profileData.judulKP}
           </h1>
         </div>
-
         {/* Profile Card */}
         <div className="p-6">
           <div className="flex flex-col md:flex-row items-center gap-6">
@@ -112,7 +111,6 @@ const MahasiswaPage = ({ params }: { params: Promise<{ name: string }> }) => {
                 </span>
               </div>
             </div>
-
             {/* Profile Details */}
             <div className="flex-1 w-full">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -165,7 +163,6 @@ const MahasiswaPage = ({ params }: { params: Promise<{ name: string }> }) => {
             </div>
           </div>
         </div>
-
         {/* Navigation Cards */}
         <div className="p-6 bg-white rounded-t-2xl">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
@@ -173,7 +170,7 @@ const MahasiswaPage = ({ params }: { params: Promise<{ name: string }> }) => {
             <div
               onClick={() =>
                 router.push(
-                  `/dosen-pembimbing/mahasiswa/${profileData._id}/daily-report`
+                  `/koordinator/mahasiswa/${profileData._id}/daily-report`
                 )
               }
               className="bg-gradient-to-b from-[#9FD8E4] via-[#9FD8E4] to-[#F8F8F8] p-6 rounded-xl shadow-sm hover:shadow-md hover:scale-102 transform transition-all duration-200 ease-in-out cursor-pointer"
@@ -199,7 +196,7 @@ const MahasiswaPage = ({ params }: { params: Promise<{ name: string }> }) => {
             <div
               onClick={() =>
                 router.push(
-                  `/dosen-pembimbing/mahasiswa/${profileData.email}/bimbingan-kp`
+                  `/koordinator/mahasiswa/${profileData.email}/bimbingan-kp`
                 )
               }
               className="bg-gradient-to-b from-[#9FD8E4] via-[#9FD8E4] to-[#F8F8F8] p-6 rounded-xl shadow-sm hover:shadow-md hover:scale-102 transform transition-all duration-200 ease-in-out cursor-pointer"

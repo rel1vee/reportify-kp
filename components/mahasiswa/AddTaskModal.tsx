@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import { Save, Upload } from "lucide-react";
@@ -19,11 +20,11 @@ interface DayInfo {
 }
 
 interface Agenda {
+  date: Date;
   waktuMulai: string;
   waktuSelesai: string;
   judulAgenda: string;
   deskripsiAgenda: string;
-  date: Date;
   files: string[];
 }
 
@@ -46,11 +47,11 @@ const DAYS = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
 
 const AddTaskModal = ({ isOpen, onClose }: AddTaskModalProps) => {
   const [Agenda, setAgenda] = useState<Agenda>({
+    date: new Date(),
     waktuMulai: "",
     waktuSelesai: "",
     judulAgenda: "",
     deskripsiAgenda: "",
-    date: new Date(),
     files: [],
   });
 
@@ -132,6 +133,7 @@ const AddTaskModal = ({ isOpen, onClose }: AddTaskModalProps) => {
     }
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleImageUpload = (result: any) => {
     if (result.event === "success") {
       const uploadedImageUrl = result.info.secure_url;
@@ -233,24 +235,28 @@ const AddTaskModal = ({ isOpen, onClose }: AddTaskModalProps) => {
           message: "Laporan berhasil disimpan.",
           type: "success",
         });
+
+        // Reset form setelah sukses
+        setAgendaList([]);
+        setAgenda({
+          waktuMulai: "",
+          waktuSelesai: "",
+          judulAgenda: "",
+          deskripsiAgenda: "",
+          date: new Date(),
+          files: [],
+        });
+
+        // Tunggu sebentar sebelum menutup
+        setTimeout(() => {
+          onClose();
+        }, 1000);
       } else {
         setNotification({
-          message: `Gagal menyimpan laporan.`,
+          message: "Gagal menyimpan laporan.",
           type: "error",
         });
       }
-
-      setAgendaList([]);
-      setAgenda({
-        waktuMulai: "",
-        waktuSelesai: "",
-        judulAgenda: "",
-        deskripsiAgenda: "",
-        date: new Date(),
-        files: [],
-      });
-
-      onClose();
     } catch (error) {
       if (error instanceof Error) {
         setNotification({

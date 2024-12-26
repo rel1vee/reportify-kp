@@ -1,36 +1,25 @@
 "use client";
 
 import Loading from "@/components/Loading";
+import WithAuth from "@/components/WithAuth";
 import { User, FileText } from "lucide-react";
 import React, { use, useEffect, useState } from "react";
 import BimbinganModal from "@/components/mahasiswa/BimbinganModal";
+import { IBimbingan } from "@/models/Bimbingan";
+import { IMahasiswa } from "@/models/Mahasiswa";
 
-interface Bimbingan {
-  nip: string;
-  tanggal: Date;
-  komentar: string;
-  status: string;
-}
-
-interface Student {
-  _id: string;
-  email: string;
-  nim: string;
-  nama: string;
-  judulKP: string;
-  instansi: string;
-  pembimbingInstansi: string;
-  dosenPembimbing: string;
-  mulaiKP: Date;
-  selesaiKP: Date;
-  bimbingan: Bimbingan[];
+interface MahasiswaWithPopulatedBimbingan
+  extends Omit<IMahasiswa, "bimbingan"> {
+  bimbingan: IBimbingan[];
 }
 
 const BimbinganKPPage = ({ params }: { params: Promise<{ name: string }> }) => {
   const { name } = use(params);
-  const [student, setStudent] = useState<Student | null>(null);
+  const [student, setStudent] = useState<MahasiswaWithPopulatedBimbingan | null>(null);
   const [isBimbinganModalOpen, setIsBimbinganModalOpen] = useState(false);
-  const [selectedBimbingan, setSelectedBimbingan] = useState<Bimbingan | null>(null);
+  const [selectedBimbingan, setSelectedBimbingan] = useState<IBimbingan | null>(
+    null
+  );
   const [loading, setLoading] = useState(true);
 
   const getInitials = (nama?: string) => {
@@ -45,11 +34,11 @@ const BimbinganKPPage = ({ params }: { params: Promise<{ name: string }> }) => {
     const fetchStudentData = async () => {
       try {
         const response = await fetch(`/api/mahasiswa?email=${name}`);
-        if (!response.ok) throw new Error('Failed to fetch student data');
+        if (!response.ok) throw new Error("Failed to fetch student data");
         const data = await response.json();
         setStudent(data);
       } catch (error) {
-        console.error('Error fetching student data:', error);
+        console.error("Error fetching student data:", error);
       } finally {
         setLoading(false);
       }
@@ -57,7 +46,6 @@ const BimbinganKPPage = ({ params }: { params: Promise<{ name: string }> }) => {
 
     fetchStudentData();
   }, [name]);
-
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -69,10 +57,7 @@ const BimbinganKPPage = ({ params }: { params: Promise<{ name: string }> }) => {
     });
   };
 
-  
-
-
-  if (loading || !student) return <Loading/>;
+  if (loading || !student) return <Loading />;
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-5xl">
@@ -99,7 +84,9 @@ const BimbinganKPPage = ({ params }: { params: Promise<{ name: string }> }) => {
                   <User className="text-cyan-600" />
                   <div>
                     <p className="text-sm text-gray-500">Nama Mahasiswa</p>
-                    <p className="font-semibold text-gray-800">{student.nama}</p>
+                    <p className="font-semibold text-gray-800">
+                      {student.nama}
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-center space-x-3">
@@ -113,14 +100,18 @@ const BimbinganKPPage = ({ params }: { params: Promise<{ name: string }> }) => {
                   <User className="text-cyan-600" />
                   <div>
                     <p className="text-sm text-gray-500">Dosen Pembimbing</p>
-                    <p className="font-semibold text-gray-800">{student.dosenPembimbing}</p>
+                    <p className="font-semibold text-gray-800">
+                      {student.dosenPembimbing}
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-center space-x-3">
                   <User className="text-cyan-600" />
                   <div>
                     <p className="text-sm text-gray-500">Pembimbing Instansi</p>
-                    <p className="font-semibold text-gray-800">{student.pembimbingInstansi}</p>
+                    <p className="font-semibold text-gray-800">
+                      {student.pembimbingInstansi}
+                    </p>
                   </div>
                 </div>
                 {/* <div className="flex items-center space-x-3 md:col-span-2">
@@ -136,8 +127,10 @@ const BimbinganKPPage = ({ params }: { params: Promise<{ name: string }> }) => {
         </div>
 
         <div className="p-6 bg-white-50">
-          <h2 className="text-xl font-bold text-center mb-4 text-gray-800">Riwayat Bimbingan</h2>
-          <div className="bg-[#D9F9FF] rounded-xl shadow-md overflow-hidden h-[175px] overflow-y-auto">
+          <h2 className="text-xl font-bold text-center mb-4 text-gray-800">
+            Riwayat Bimbingan
+          </h2>
+          <div className="bg-[#D9F9FF] rounded-xl shadow-md overflow-hidden h-auto overflow-y-auto">
             <table className="w-full">
               <thead className="bg-[#F0F9FF]">
                 <tr>
@@ -147,7 +140,10 @@ const BimbinganKPPage = ({ params }: { params: Promise<{ name: string }> }) => {
               </thead>
               <tbody>
                 {student.bimbingan.map((bimbingan, index) => (
-                  <tr key={index} className="border-b border-gray-100 transition-colors">
+                  <tr
+                    key={index}
+                    className="border-b border-gray-100 transition-colors"
+                  >
                     <td className="py-3 px-4 text-gray-700">
                       {formatDate(bimbingan.tanggal.toString())}
                     </td>
@@ -167,8 +163,6 @@ const BimbinganKPPage = ({ params }: { params: Promise<{ name: string }> }) => {
               </tbody>
             </table>
           </div>
-          
-          
         </div>
       </div>
 
@@ -181,12 +175,11 @@ const BimbinganKPPage = ({ params }: { params: Promise<{ name: string }> }) => {
             setSelectedBimbingan(null);
           }}
           data={selectedBimbingan}
+          mahasiswa={student}
         />
       )}
-
     </div>
-
   );
 };
 
-export default BimbinganKPPage;
+export default WithAuth(BimbinganKPPage, ["koordinator"]);

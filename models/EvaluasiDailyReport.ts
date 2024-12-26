@@ -2,7 +2,7 @@ import { Document, Schema, model, models, Types } from "mongoose";
 
 export interface IEvaluasiDailyReport extends Document {
   dailyReportId?: Types.ObjectId;
-  pembimbingInstansiId: string;
+  nip: string;
   komentar: string;
   status: string;
 }
@@ -13,7 +13,7 @@ const EvaluasiDailyReportSchema = new Schema<IEvaluasiDailyReport>({
     ref: "DailyReport",
     required: true,
   },
-  pembimbingInstansiId: { type: String, required: true },
+  nip: { type: String, required: true },
   komentar: { type: String, required: true },
   status: { type: String, required: true },
 });
@@ -91,9 +91,9 @@ class EvaluasiDailyReportClass {
       .populate("_id");
   }
 
-  async delete(id: string): Promise<IEvaluasiDailyReport | null> {
-    return this.model.findByIdAndDelete(id);
-  }
+  // async delete(id: string): Promise<IEvaluasiDailyReport | null> {
+  //   return this.model.findByIdAndDelete(id);
+  // }
 
   async updateStatusInDailyReport(
     evaluasiId: string,

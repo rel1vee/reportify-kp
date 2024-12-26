@@ -10,10 +10,10 @@ export interface IBimbingan extends Document {
 
 const BimbinganSchema = new Schema<IBimbingan>({
   _id: { type: Schema.Types.ObjectId, auto: true },
-  nip: { type: String },
+  nip: { type: String, required: true },
   tanggal: { type: Date, required: true },
   komentar: { type: String, required: true },
-  status: { type: String },
+  status: { type: String, required: false },
 });
 
 BimbinganSchema.set("toJSON", {
@@ -30,7 +30,8 @@ class BimbinganClass {
   private model;
 
   constructor() {
-    this.model = models.Bimbingan || model<IBimbingan>("Bimbingan", BimbinganSchema);
+    this.model =
+      models.Bimbingan || model<IBimbingan>("Bimbingan", BimbinganSchema);
   }
 
   async create(data: Partial<IBimbingan>): Promise<IBimbingan> {
@@ -50,13 +51,12 @@ class BimbinganClass {
     id: string,
     data: Partial<IBimbingan>
   ): Promise<IBimbingan | null> {
-    return this.model
-      .findByIdAndUpdate(id, data, { new: true })
+    return this.model.findByIdAndUpdate(id, data, { new: true });
   }
 
-  async delete(id: string): Promise<IBimbingan | null> {
-    return this.model.findByIdAndDelete(id);
-  }
+  // async delete(id: string): Promise<IBimbingan | null> {
+  //   return this.model.findByIdAndDelete(id);
+  // }
 }
 
 const Bimbingan = new BimbinganClass();

@@ -1,38 +1,25 @@
 "use client";
 
-import React, { use, useEffect, useState } from "react";
-import { User, FileText, Plus } from "lucide-react";
-import AddBimbinganModal from "@/components/dosen-pembimbing/AddBimbinganModal";
-import BimbinganModal from "@/components/mahasiswa/BimbinganModal";
 import Loading from "@/components/Loading";
+import { User, FileText, Plus } from "lucide-react";
+import React, { use, useEffect, useState } from "react";
+import BimbinganModal from "@/components/mahasiswa/BimbinganModal";
+import AddBimbinganModal from "@/components/dosen-pembimbing/AddBimbinganModal";
+import WithAuth from "@/components/WithAuth";
+import { IBimbingan } from "@/models/Bimbingan";
+import { IMahasiswa } from "@/models/Mahasiswa";
 
-interface Bimbingan {
-  nip: string;
-  tanggal: Date;
-  komentar: string;
-  status: string;
-}
-
-interface Student {
-  _id: string;
-  email: string;
-  nim: string;
-  nama: string;
-  judulKP: string;
-  instansi: string;
-  pembimbingInstansi: string;
-  dosenPembimbing: string;
-  mulaiKP: Date;
-  selesaiKP: Date;
-  bimbingan: Bimbingan[];
+interface MahasiswaWithPopulatedBimbingan
+  extends Omit<IMahasiswa, "bimbingan"> {
+  bimbingan: IBimbingan[];
 }
 
 const BimbinganKPPage = ({ params }: { params: Promise<{ name: string }> }) => {
   const { name } = use(params);
-  const [student, setStudent] = useState<Student | null>(null);
+  const [student, setStudent] = useState<MahasiswaWithPopulatedBimbingan | null>(null);
   const [isBimbinganKPModalOpen, setIsBimbinganKPModalOpen] = useState(false);
   const [isBimbinganModalOpen, setIsBimbinganModalOpen] = useState(false);
-  const [selectedBimbingan, setSelectedBimbingan] = useState<Bimbingan | null>(null);
+  const [selectedBimbingan, setSelectedBimbingan] = useState<IBimbingan | null>(null);
   const [loading, setLoading] = useState(true);
 
   const getInitials = (nama?: string) => {
@@ -141,7 +128,7 @@ const BimbinganKPPage = ({ params }: { params: Promise<{ name: string }> }) => {
 
         <div className="p-6 bg-white-50">
           <h2 className="text-xl font-bold text-center mb-4 text-gray-800">Riwayat Bimbingan</h2>
-          <div className="bg-[#D9F9FF] rounded-xl shadow-md overflow-hidden h-[175px] overflow-y-auto">
+          <div className="bg-[#D9F9FF] rounded-xl shadow-md overflow-hidden h-auto overflow-y-auto">
             <table className="w-full">
               <thead className="bg-[#F0F9FF]">
                 <tr>
@@ -187,6 +174,7 @@ const BimbinganKPPage = ({ params }: { params: Promise<{ name: string }> }) => {
       </div>
 
       {/* Modals */}
+      {/* Modals */}
       {isBimbinganModalOpen && selectedBimbingan && (
         <BimbinganModal
           isOpen={isBimbinganModalOpen}
@@ -195,6 +183,7 @@ const BimbinganKPPage = ({ params }: { params: Promise<{ name: string }> }) => {
             setSelectedBimbingan(null);
           }}
           data={selectedBimbingan}
+          mahasiswa={student}
         />
       )}
 
@@ -209,4 +198,4 @@ const BimbinganKPPage = ({ params }: { params: Promise<{ name: string }> }) => {
   );
 };
 
-export default BimbinganKPPage;
+export default WithAuth(BimbinganKPPage, ["dosen-pembimbing"]);

@@ -69,6 +69,7 @@ const LandingPage = () => {
         window.location.href = "/unassign";
       }
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [keycloak.authenticated]);
 
   if (isLoading) {

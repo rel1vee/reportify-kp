@@ -1,7 +1,7 @@
 "use client";
 
-import WithAuth from "@/components/WithAuth";
 import { useRouter } from "next/navigation";
+import WithAuth from "@/components/WithAuth";
 import { useEffect, useState, useMemo } from "react";
 
 interface Student {
@@ -42,8 +42,8 @@ interface Bimbingan {
 
 const ProgressBar = ({ value }: { value: number }) => (
   <div className="w-full bg-gray-200 rounded-full h-2">
-    <div 
-      className="bg-[#2C707B] h-2 rounded-full transition-all duration-300" 
+    <div
+      className="bg-[#2C707B] h-2 rounded-full transition-all duration-300"
       style={{ width: `${Math.min(Math.max(value, 0), 100)}%` }}
     />
   </div>
@@ -65,12 +65,12 @@ const DaftarMahasiswaPage = () => {
   useEffect(() => {
     const fetchStudents = async () => {
       try {
-        const response = await fetch('/api/mahasiswa');
-        if (!response.ok) throw new Error('Failed to fetch students');
+        const response = await fetch("/api/mahasiswa");
+        if (!response.ok) throw new Error("Failed to fetch students");
         const data = await response.json();
         setStudents(data);
       } catch (err) {
-        setError(err instanceof Error ? err.message : 'An error occurred');
+        setError(err instanceof Error ? err.message : "An error occurred");
       } finally {
         setLoading(false);
       }
@@ -114,39 +114,39 @@ const DaftarMahasiswaPage = () => {
     if (today < startDate) return 0;
     if (today > endDate) return 100;
 
-    const totalDays = Math.ceil((endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24));
-    const daysPassed = Math.ceil((today.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24));
-    
+    const totalDays = Math.ceil(
+      (endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24)
+    );
+    const daysPassed = Math.ceil(
+      (today.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24)
+    );
+
     return Math.round((daysPassed / totalDays) * 100);
   };
 
   const getPendingBimbinganCount = (student: Student): number => {
-    return student.bimbingan.filter(b => b.status === "pending").length;
+    return student.bimbingan.filter((b) => b.status === "pending").length;
   };
 
   const getSemester = (nim: string): number => {
     const year = parseInt(nim.substring(1, 3));
     const currentYear = new Date().getFullYear() % 100;
-    const semester = ((currentYear - year) * 2 + 1);
+    const semester = (currentYear - year) * 2 + 1;
     return semester > 0 ? semester : 1;
   };
 
   const formatDate = (dateString: string): string => {
-    return new Date(dateString).toLocaleDateString('id-ID', {
-      day: 'numeric',
-      month: 'long',
-      year: 'numeric'
+    return new Date(dateString).toLocaleDateString("id-ID", {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
     });
   };
 
   if (loading) return <LoadingSpinner />;
 
   if (error) {
-    return (
-      <div className="p-8 text-red-500 text-center">
-        Error: {error}
-      </div>
-    );
+    return <div className="p-8 text-red-500 text-center">Error: {error}</div>;
   }
 
   return (
@@ -177,7 +177,6 @@ const DaftarMahasiswaPage = () => {
           </svg>
         </div>
       </div>
-
       <div className="h-[calc(100vh-200px)] overflow-y-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {filteredStudents.length > 0 ? (
@@ -193,25 +192,27 @@ const DaftarMahasiswaPage = () => {
                 >
                   <div className="flex items-start space-x-4">
                     <div className="flex-shrink-0">
-                      <div className="flex items-center justify-center w-16 h-16 bg-[#9FD8E4] rounded-full 
-                                    text-white text-xl font-semibold shadow-sm">
+                      <div
+                        className="flex items-center justify-center w-16 h-16 bg-[#9FD8E4] rounded-full 
+                                    text-white text-xl font-semibold shadow-sm"
+                      >
                         {getInitials(student.nama)}
                       </div>
                     </div>
-                    
                     <div className="flex-1 min-w-0">
                       <div className="flex items-start justify-between mb-1">
                         <h3 className="text-lg font-bold truncate text-gray-800">
                           {student.nama}
                         </h3>
                         {pendingCount > 0 && (
-                          <span className="inline-flex items-center justify-center bg-red-500 text-white 
-                                         text-xs font-semibold px-2 py-1 rounded-full min-w-[20px]">
+                          <span
+                            className="inline-flex items-center justify-center bg-red-500 text-white 
+                                         text-xs font-semibold px-2 py-1 rounded-full min-w-[20px]"
+                          >
                             {pendingCount}
                           </span>
                         )}
                       </div>
-                      
                       <div className="space-y-2 mb-3">
                         <p className="text-gray-600 text-sm">
                           {student.nim} • Semester {getSemester(student.nim)}
@@ -220,14 +221,14 @@ const DaftarMahasiswaPage = () => {
                           {student.instansi}
                         </p>
                       </div>
-
                       <div className="space-y-1.5">
                         <div className="flex justify-between text-sm">
                           <span className="text-gray-600">Progress KP</span>
-                          <span className="text-gray-800 font-medium">{progress}%</span>
+                          <span className="text-gray-800 font-medium">
+                            {progress}%
+                          </span>
                         </div>
                         <ProgressBar value={progress} />
-                        
                         <div className="flex justify-between text-xs text-gray-500 mt-1">
                           <span>{formatDate(student.mulaiKP)}</span>
                           <span>{formatDate(student.selesaiKP)}</span>
@@ -240,9 +241,10 @@ const DaftarMahasiswaPage = () => {
                       </div> */}
                     </div>
                   </div>
-                  
-                  <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity 
-                                duration-300 text-sm text-[#2C707B] font-medium">
+                  <div
+                    className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity 
+                                duration-300 text-sm text-[#2C707B] font-medium"
+                  >
                     Lihat Detail →
                   </div>
                 </div>

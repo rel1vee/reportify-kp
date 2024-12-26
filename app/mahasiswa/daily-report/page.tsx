@@ -8,6 +8,13 @@ import { useEffect, useRef, useState } from "react";
 import ReviewModal from "@/components/mahasiswa/ReviewModal";
 import CetakLaporan from "@/components/mahasiswa/CetakLaporan";
 
+interface IEvaluasiDailyReport {
+  dailyReportId?: string;
+  pembimbingInstansiId: string;
+  komentar: string;
+  status: string;
+}
+
 interface IAgenda {
   waktuMulai: string;
   waktuSelesai: string;
@@ -20,19 +27,6 @@ interface IDailyReport {
   _id: string;
   tanggal: Date | string;
   agenda?: IAgenda[];
-}
-
-interface IEvaluasiDailyReport {
-  dailyReportId?: string;
-  pembimbingInstansiId: string;
-  komentar: string;
-  status: string;
-}
-
-interface ITask {
-  task: string;
-  date: string;
-  status: string;
 }
 
 interface IMahasiswa {
@@ -48,6 +42,13 @@ interface IMahasiswa {
   selesaiKP: string;
   reports: IDailyReport[];
 }
+
+interface ITask {
+  task: string;
+  date: string;
+  status: string;
+}
+
 
 const DailyReportPage = () => {
   const [currentDate, setCurrentDate] = useState("");
@@ -120,7 +121,7 @@ const DailyReportPage = () => {
         );
 
         if (!mahasiswaResponse.ok) {
-          throw new Error("Failed to fetch mahasiswa data.");
+          throw new Error("Failed to fetch report data.");
         }
 
         const mahasiswaData: IMahasiswa = await mahasiswaResponse.json();
@@ -185,15 +186,27 @@ const DailyReportPage = () => {
     return <Loading />;
   }
 
-  if (error) {
+  if (!mahasiswaData) {
     return (
       <div className="flex h-screen bg-white items-center justify-center">
-        <div className="text-xl text-red-600">Error: {error}</div>
+        <div className="text-xl text-gray-600">
+          Anda Belum Membuat Laporan...
+        </div>
       </div>
     );
   }
 
-  const tasks = convertToTasks(mahasiswaData.reports, evaluasiData);
+  if (error) {
+    return (
+      <div className="flex h-screen bg-white items-center justify-center">
+        <div className="text-xl text-red-600">
+          Error: {error}
+        </div>
+      </div>
+    );
+  }
+
+  const tasks = mahasiswaData ? convertToTasks(mahasiswaData.reports, evaluasiData): [];
 
   return (
     <div className="flex-1 h-screen overflow-y-auto w-full bg-white">

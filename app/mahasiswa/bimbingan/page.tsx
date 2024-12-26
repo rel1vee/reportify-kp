@@ -41,7 +41,7 @@ const RiwayatBimbinganPage = () => {
       );
 
       if (!response.ok) {
-        throw new Error("Failed to fetch mahasiswa data.");
+        throw new Error("Failed to fetch bimbingan data.");
       }
 
       const data: MahasiswaWithPopulatedBimbingan = await response.json();
@@ -93,6 +93,16 @@ const RiwayatBimbinganPage = () => {
     return <Loading />;
   }
 
+  if (!mahasiswaData) {
+    return (
+      <div className="flex h-screen bg-white items-center justify-center">
+        <div className="text-xl text-gray-600">
+          Dosen Belum Menambahkan Bimbingan...
+        </div>
+      </div>
+    );
+  }
+
   if (error) {
     return (
       <div className="flex h-screen bg-white items-center justify-center">
@@ -122,7 +132,7 @@ const RiwayatBimbinganPage = () => {
               </tr>
             </thead>
             <tbody>
-              {mahasiswaData?.bimbingan?.map(
+              {mahasiswaData.bimbingan?.map(
                 (bimbingan: IBimbingan, index: number) => (
                   <tr
                     key={index}

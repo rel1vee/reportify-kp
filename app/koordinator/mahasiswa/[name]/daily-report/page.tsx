@@ -3,10 +3,23 @@
 import Loading from "@/components/Loading";
 import WithAuth from "@/components/WithAuth";
 import { use, useEffect, useState } from "react";
-import { IDailyReport } from "@/models/DailyReport";
 import { User, FileText, Calendar } from "lucide-react";
 import { IEvaluasiDailyReport } from "@/models/EvaluasiDailyReport";
 import ReviewModal from "@/components/pembimbing-instansi/ReviewModal";
+
+interface IAgenda {
+  waktuMulai: string;
+  waktuSelesai: string;
+  judulAgenda: string;
+  deskripsiAgenda: string;
+  files: string[];
+}
+
+interface IDailyReport {
+  _id: string; 
+  tanggal: Date | string;
+  agenda?: IAgenda[];
+}
 
 interface Student {
   _id: string;
@@ -63,14 +76,15 @@ const DailyReportMahasiswaPage = ({ params }: PageProps) => {
         const evalResponse = await fetch(`/api/evaluasi`);
         if (!evalResponse.ok) throw new Error("Failed to fetch evaluasi data.");
         const evaluations: IEvaluasiDailyReport[] = await evalResponse.json();
+        
         setEvaluasiData(evaluations);
 
         // Match evaluations to reports
-        const matchedReports = currentStudent.reports.map(
-          (report: IDailyReport) => {
-            const matchedEvaluation = evaluations.find(
-              (evalItem) => evalItem.dailyReportId === report._id
-            );
+        const matchedReports = currentStudent.reports.map((report: IDailyReport) => {
+          const matchedEvaluation = evaluations.find(
+            (evaluasi) =>
+              evaluasi.dailyReportId?.toString() === report._id?.toString()
+          );
             return {
               ...report,
               status: matchedEvaluation?.status || "Belum dievaluasi",

@@ -26,7 +26,7 @@ const MahasiswaSchema = new Schema<IMahasiswa>(
     pembimbingInstansi: { type: String, required: true },
     dosenPembimbing: { type: String, required: true },
     mulaiKP: { type: Date, required: true },
-    selesaiKP: { type: Date },
+    selesaiKP: { type: Date, required: false },
     reports: [{ type: Schema.Types.ObjectId, ref: "DailyReport" }],
     bimbingan: [{ type: Schema.Types.ObjectId, ref: "Bimbingan" }],
   },
@@ -43,7 +43,8 @@ MahasiswaSchema.set("toJSON", {
   },
 });
 
-export const MahasiswaModel = models.Mahasiswa || model<IMahasiswa>("Mahasiswa", MahasiswaSchema);
+export const MahasiswaModel =
+  models.Mahasiswa || model<IMahasiswa>("Mahasiswa", MahasiswaSchema);
 
 class MahasiswaClass {
   private model;
@@ -70,9 +71,7 @@ class MahasiswaClass {
     return this.model.find({ pembimbingInstansi }).populate("reports");
   }
 
-  async findByDosenPembimbing(
-    dosenPembimbing: string
-  ): Promise<IMahasiswa[]> {
+  async findByDosenPembimbing(dosenPembimbing: string): Promise<IMahasiswa[]> {
     return this.model
       .find({ dosenPembimbing })
       .populate("reports")

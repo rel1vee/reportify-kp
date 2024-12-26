@@ -2,6 +2,13 @@ import MongoDB from "@/libs/mongodb";
 import { NextResponse } from "next/server";
 import EvaluasiDailyReport from "@/models/EvaluasiDailyReport";
 
+interface DailyReportValidation {
+  dailyReportId: string;
+  nip: string;
+  komentar: string;
+  status: string;
+}
+
 class EvaluasiController {
   async connectDB() {
     try {
@@ -29,10 +36,10 @@ class EvaluasiController {
     }
   }
 
-  validateCreatePayload(data: any) {
-    const requiredFields = [
+  validateCreatePayload(data: Partial<DailyReportValidation>) {
+    const requiredFields: (keyof DailyReportValidation)[] = [
       "dailyReportId",
-      "pembimbingInstansiId",
+      "nip",
       "komentar",
       "status",
     ];
@@ -50,7 +57,7 @@ class EvaluasiController {
     try {
       const data = await req.json();
       const validationError = this.validateCreatePayload(data);
-      
+
       if (validationError) {
         return NextResponse.json({ message: validationError }, { status: 400 });
       }
@@ -103,43 +110,43 @@ class EvaluasiController {
     }
   }
 
-  async delete(req: Request) {
-    await this.connectDB();
-    try {
-      const url = new URL(req.url);
-      const _id = url.pathname.split("/").pop(); // Mengambil ID dari path
+  // async delete(req: Request) {
+  //   await this.connectDB();
+  //   try {
+  //     const url = new URL(req.url);
+  //     const _id = url.pathname.split("/").pop(); // Mengambil ID dari path
 
-      if (!_id) {
-        return NextResponse.json(
-          { message: "ID (_id) is required" },
-          { status: 400 }
-        );
-      }
+  //     if (!_id) {
+  //       return NextResponse.json(
+  //         { message: "ID (_id) is required" },
+  //         { status: 400 }
+  //       );
+  //     }
 
-      const deletedEvaluasi = await EvaluasiDailyReport.delete(_id);
+  //     const deletedEvaluasi = await EvaluasiDailyReport.delete(_id);
 
-      if (!deletedEvaluasi) {
-        return NextResponse.json(
-          { message: "Evaluasi not found" },
-          { status: 404 }
-        );
-      }
+  //     if (!deletedEvaluasi) {
+  //       return NextResponse.json(
+  //         { message: "Evaluasi not found" },
+  //         { status: 404 }
+  //       );
+  //     }
 
-      return NextResponse.json(
-        { message: "Evaluasi deleted successfully" },
-        { status: 200 }
-      );
-    } catch (error) {
-      console.error("Error deleting Evaluasi:", error);
-      if (error instanceof Error) {
-        return NextResponse.json({ message: error.message }, { status: 500 });
-      }
-      return NextResponse.json(
-        { message: "Unknown error occurred." },
-        { status: 500 }
-      );
-    }
-  }
+  //     return NextResponse.json(
+  //       { message: "Evaluasi deleted successfully" },
+  //       { status: 200 }
+  //     );
+  //   } catch (error) {
+  //     console.error("Error deleting Evaluasi:", error);
+  //     if (error instanceof Error) {
+  //       return NextResponse.json({ message: error.message }, { status: 500 });
+  //     }
+  //     return NextResponse.json(
+  //       { message: "Unknown error occurred." },
+  //       { status: 500 }
+  //     );
+  //   }
+  // }
 }
 
 const evaluasiController = new EvaluasiController();
@@ -156,6 +163,6 @@ export async function PUT(req: Request) {
   return evaluasiController.update(req);
 }
 
-export async function DELETE(req: Request) {
-  return evaluasiController.delete(req);
-}
+// export async function DELETE(req: Request) {
+//   return evaluasiController.delete(req);
+// }

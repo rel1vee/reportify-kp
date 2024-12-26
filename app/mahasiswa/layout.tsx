@@ -192,7 +192,13 @@ export default function RootLayout({
           dosenPembimbing: formData.dosenPembimbing,
         }));
 
-        toggleModal();
+        // Tunggu sebentar sebelum menutup
+        setTimeout(() => {
+          toggleModal();
+        }, 1000);
+
+        // Optional: Refresh the page
+        window.location.reload();
       } else {
         setNotification({
           message: "Failed to update profile. Please try again.",
@@ -308,7 +314,7 @@ export default function RootLayout({
   };
 
   return (
-    <main>
+    <>
       {/* Popup Notification */}
       {notification && (
         <NotificationPopup
@@ -727,6 +733,6 @@ export default function RootLayout({
           </div>
         </div>
       </div>
-    </main>
+    </>
   );
 }

@@ -2,9 +2,9 @@
 
 import Loading from "@/components/Loading";
 import { useRouter } from "next/navigation";
+import WithAuth from "@/components/WithAuth";
 import { IDailyReport } from "@/models/DailyReport";
 import { useEffect, useState, useMemo } from "react";
-import WithAuth from "@/components/WithAuth";
 
 interface Student {
   _id: string;
