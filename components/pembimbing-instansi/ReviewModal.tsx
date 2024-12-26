@@ -14,8 +14,8 @@ interface IDailyReport {
   _id: string;
   tanggal: Date | string;
   agenda?: IAgenda[];
-  status?: string;  // Add this to match parent component
-  komentar?: string;  // Add this to match parent component
+  status?: string;  
+  komentar?: string;  
 }
 
 interface IEvaluasiDailyReport {
