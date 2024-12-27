@@ -292,7 +292,7 @@ const AddTaskModal = ({ isOpen, onClose }: AddTaskModalProps) => {
         />
       )}
       <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-40">
-        <div className="bg-white rounded-xl py-4 px-6 w-[90%] md:max-w-[1000px] h-auto lg:h-[90vh] overflow-y-auto">
+        <div className="bg-white rounded-xl py-4 px-6 w-[90%] md:max-w-[1000px] h-[90vh] overflow-y-auto">
           <button
             onClick={onClose}
             className="w-full text-gray-500 hover:text-red-500 text-end"
