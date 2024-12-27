@@ -13,7 +13,7 @@ const NotificationPopup: React.FC<NotificationPopupProps> = ({
   message,
   onClose,
   type,
-  duration = 5000,
+  duration = 3000,
 }) => {
   const notificationConfig = {
     success: {

@@ -57,7 +57,7 @@ const AddBimbinganModal = ({
 
       setTimeout(() => {
         onClose();
-      }, 1000);
+      }, 3000);
 
       window.location.reload();
     } catch (error) {

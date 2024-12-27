@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Edit } from "lucide-react";
+import { Book, Edit, Save } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useKeycloak } from "@react-keycloak/web";
 import NotificationPopup from "@/components/NotificationPopUp";
@@ -391,10 +391,13 @@ export default function RootLayout({
               <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50">
                 <div className="bg-white rounded-xl shadow-lg w-11/12 md:w-3/4 lg:w-2/3 p-6 relative overflow-y-auto">
                   {/* Modal Header */}
-                  <div className="flex justify-between items-center border-b pb-3 mb-4">
-                    <h2 className="text-2xl font-semibold text-gray-800">
-                      Profile
-                    </h2>
+                  <div className="flex justify-between items-center pb-3 mb-2">
+                    <div className="flex justify-center items-center gap-3">
+                      <Book />
+                      <h2 className="text-2xl font-semibold text-gray-950">
+                        Lengkapi Data Berikut...
+                      </h2>
+                    </div>
                     <button
                       onClick={toggleModal}
                       className="text-gray-600 hover:text-red-500 text-xl"
@@ -457,8 +460,9 @@ export default function RootLayout({
                       </button>
                       <button
                         type="submit"
-                        className="ml-2 px-4 py-2 bg-[#2C707B] hover:bg-[#225158] text-white rounded-md transition-all duration-300"
+                        className="flex ml-2 px-4 py-2 bg-[#2C707B] hover:bg-[#225158] gap-2 text-white items-center justify-center rounded-xl transition-all duration-300"
                       >
+                        <Save size={18} />
                         Simpan
                       </button>
                     </div>
