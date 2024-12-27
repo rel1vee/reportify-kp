@@ -70,7 +70,7 @@ const CetakLaporan = forwardRef<HTMLDivElement, CetakLaporanProps>(
           year: "numeric",
         }),
         agenda: report.agenda || [],
-        evaluasi: matchingEvaluasi?.komentar || "Tidak Ada Evaluasi.",
+        evaluasi: matchingEvaluasi?.komentar || "Tidak Ada Evaluasi",
         imgsrc: imgsrc,
       };
     });
@@ -259,7 +259,7 @@ const CetakLaporan = forwardRef<HTMLDivElement, CetakLaporanProps>(
           </div>
         </div>
         <div className="ml-56 mt-8 p-4 text-start">
-          <p>Dosen Pembimbing KP</p>
+          <p>Dosen Pembimbing</p>
           <br />
           <br />
           <br />

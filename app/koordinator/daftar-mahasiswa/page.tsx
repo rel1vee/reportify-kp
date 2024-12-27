@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import WithAuth from "@/components/WithAuth";
 import { useEffect, useState, useMemo } from "react";
+import Loading from "@/components/Loading";
 
 interface Student {
   _id: string;
@@ -49,11 +50,11 @@ const ProgressBar = ({ value }: { value: number }) => (
   </div>
 );
 
-const LoadingSpinner = () => (
-  <div className="flex justify-center items-center h-screen">
-    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#2C707B]" />
-  </div>
-);
+// const LoadingSpinner = () => (
+//   <div className="flex justify-center items-center h-screen">
+//     <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#2C707B]" />
+//   </div>
+// );
 
 const DaftarMahasiswaPage = () => {
   const router = useRouter();
@@ -143,10 +144,17 @@ const DaftarMahasiswaPage = () => {
     });
   };
 
-  if (loading) return <LoadingSpinner />;
+  if (loading) return <Loading />;
 
   if (error) {
-    return <div className="p-8 text-red-500 text-center">Error: {error}</div>;
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-center">
+          <h2 className="text-2xl font-bold text-red-600 mb-2">Error</h2>
+          <p className="text-gray-600">{error}</p>
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -177,7 +185,7 @@ const DaftarMahasiswaPage = () => {
           </svg>
         </div>
       </div>
-      <div className="h-[calc(100vh-200px)] overflow-y-auto">
+      <div className="overflow-y-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {filteredStudents.length > 0 ? (
             filteredStudents.map((student) => {
@@ -188,7 +196,7 @@ const DaftarMahasiswaPage = () => {
                   key={student._id}
                   onClick={() => handleCardClick(student.email)}
                   className="bg-[#D9F9FF] p-6 rounded-[20px] shadow hover:shadow-md transition-all duration-300 
-                           cursor-pointer relative group border border-transparent hover:border-blue-200"
+                           cursor-pointer relative group border border-transparent"
                 >
                   <div className="flex items-start space-x-4">
                     <div className="flex-shrink-0">
@@ -222,8 +230,7 @@ const DaftarMahasiswaPage = () => {
                         </p>
                       </div>
                       <div className="space-y-1.5">
-                        <div className="flex justify-between text-sm">
-                          <span className="text-gray-600">Progress KP</span>
+                        <div className="flex justify-end text-sm">
                           <span className="text-gray-800 font-medium">
                             {progress}%
                           </span>
@@ -252,7 +259,7 @@ const DaftarMahasiswaPage = () => {
             })
           ) : (
             <div className="col-span-2 text-center py-8 text-gray-500">
-              Tidak ada mahasiswa yang ditemukan
+              Tidak ada mahasiswa yang ditemukan...
             </div>
           )}
         </div>

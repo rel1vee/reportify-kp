@@ -38,7 +38,6 @@ export default function RootLayout({
       const storedNama = localStorage.getItem("nama") || "";
       setNama(storedNama);
 
-      // Update formData dengan nilai yang diambil dari localStorage
       setFormData((prevFormData) => ({
         ...prevFormData,
         email: storedEmail,
@@ -473,9 +472,9 @@ export default function RootLayout({
               </div>
             </div>
             <h3 className="font-bold text-lg">{nama}</h3>
-            <p className="text-[#C5C5C5] text-sm mt-2">{profil.nip}</p>
-            <p className="text-[#C5C5C5] text-sm mt-1">{profil.instansi}</p>
-            <p className="text-[#C5C5C5] text-sm mt-1">
+            <p className="text-gray-400 text-sm mt-4">{profil.nip}</p>
+            <p className="text-gray-400 text-sm mt-2">{profil.instansi}</p>
+            <p className="text-gray-400 text-sm mt-2">
               {profil.jabatanInstansi}
             </p>
           </div>

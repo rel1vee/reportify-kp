@@ -80,7 +80,9 @@ const DailyReportMahasiswaPage = ({ params }: PageProps) => {
         setStudent(currentStudent);
 
         // Fetch evaluasi data
-        const evalResponse = await fetch(`/api/evaluasi`);
+        const evalResponse = await fetch(
+          `/api/evaluasi?email=${student?.email}`
+        );
         if (!evalResponse.ok) throw new Error("Failed to fetch evaluasi data.");
         const evaluations: IEvaluasiDailyReport[] = await evalResponse.json();
         setEvaluasiData(evaluations);
@@ -89,7 +91,8 @@ const DailyReportMahasiswaPage = ({ params }: PageProps) => {
         const matchedReports = currentStudent.reports.map(
           (report: IDailyReport) => {
             const matchedEvaluation = evaluations.find(
-              (evalItem) => evalItem.dailyReportId === report._id
+              (evalItem) =>
+                evalItem.dailyReportId?.toString() === report._id.toString()
             );
             return {
               ...report,
@@ -108,7 +111,7 @@ const DailyReportMahasiswaPage = ({ params }: PageProps) => {
     };
 
     fetchData();
-  }, [id]);
+  }, [id, student?.email]);
 
   const getInitials = (nama?: string) => {
     if (!nama) {
@@ -176,7 +179,7 @@ const DailyReportMahasiswaPage = ({ params }: PageProps) => {
   });
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-5xl">
+    <div className="container mx-auto px-4 py-8 max-w-5xl overflow-y-auto">
       <div className="max-w-6xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden mt-14 lg:my-0">
         {/* Title */}
         <div className="bg-gradient-to-r from-cyan-100 to-blue-100 p-4">

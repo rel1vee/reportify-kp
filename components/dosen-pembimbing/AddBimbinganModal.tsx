@@ -6,9 +6,14 @@ import NotificationPopup from "@/components/NotificationPopUp";
 interface AddBimbinganModalProps {
   isOpen: boolean;
   onClose: () => void;
+  emailMahasiswa: string;
 }
 
-const AddBimbinganModal = ({ isOpen, onClose }: AddBimbinganModalProps) => {
+const AddBimbinganModal = ({
+  isOpen,
+  onClose,
+  emailMahasiswa,
+}: AddBimbinganModalProps) => {
   const [komentar, setKomentar] = useState("");
   const [tanggal, setTanggal] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -24,7 +29,8 @@ const AddBimbinganModal = ({ isOpen, onClose }: AddBimbinganModalProps) => {
     setIsLoading(true);
 
     const payload = {
-      nip: localStorage.getItem("nip") || "196401196401",
+      emailMahasiswa,
+      nip: "196401196401",
       tanggal: new Date(tanggal),
       komentar: komentar,
       status: "Diterima",
@@ -48,7 +54,11 @@ const AddBimbinganModal = ({ isOpen, onClose }: AddBimbinganModalProps) => {
         message: "Bimbingan berhasil disimpan!",
         type: "success",
       });
-      onClose();
+
+      setTimeout(() => {
+        onClose();
+      }, 1000);
+
       window.location.reload();
     } catch (error) {
       console.error("Error:", error);

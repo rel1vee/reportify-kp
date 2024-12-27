@@ -42,11 +42,11 @@ const BimbinganModal = ({
       {/* Backdrop */}
       <div className="fixed inset-0 bg-black/50" onClick={onClose} />
       {/* Modal Content */}
-      <div className="relative bg-white rounded-xl w-full max-w-3xl mx-4 p-8 z-50 shadow-lg">
+      <div className="relative bg-white rounded-xl w-full h-[90vh] max-w-3xl mx-4 p-8 z-50 shadow-lg overflow-y-auto">
         {/* Header */}
         <div className="mb-6 text-center">
-          <h3 className="text-xl font-semibold text-gray-800">
-            Review Bimbingan
+          <h3 className="text-xl font-bold text-gray-800 mb-2">
+            Review Bimbingan KP
           </h3>
         </div>
         {/* Content */}
@@ -96,10 +96,10 @@ const BimbinganModal = ({
             <div className="border-t mt-6 pt-6">
               {/* Evaluasi Bimbingan */}
               <div className="text-sm text-gray-500 mb-2">
-                EVALUASI Bimbingan
+                EVALUASI BIMBINGAN
               </div>
-              <div className="border rounded-xl p-4 bg-gray-50">
-                <div className="font-medium text-gray-700 mb-2">
+              <div className="border-2 rounded-xl p-4 bg-green-50 border-green-500 shadow-md">
+                <div className="font-medium text-gray-800 mb-2">
                   {formatDate(data.tanggal.toString())}
                 </div>
                 <div className="text-sm text-gray-600">{data.komentar}</div>
@@ -110,7 +110,7 @@ const BimbinganModal = ({
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 text-gray-600 hover:text-gray-800"
+          className="absolute top-4 right-4 text-gray-600 hover:text-red-500"
         >
           <svg
             className="w-5 h-5 sm:w-6 sm:h-6"

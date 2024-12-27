@@ -16,7 +16,7 @@ interface IAgenda {
 }
 
 interface IDailyReport {
-  _id: string; 
+  _id: string;
   tanggal: Date | string;
   agenda?: IAgenda[];
 }
@@ -53,15 +53,7 @@ const DailyReportMahasiswaPage = ({ params }: PageProps) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const dosenPembimbing = localStorage.getItem("nama");
-        if (!dosenPembimbing) throw new Error("Pembimbing not found.");
-
-        // Fetch student data
-        const studentResponse = await fetch(
-          `/api/mahasiswa?dosenPembimbing=${encodeURIComponent(
-            dosenPembimbing
-          )}`
-        );
+        const studentResponse = await fetch("/api/mahasiswa");
 
         if (!studentResponse.ok)
           throw new Error("Failed to fetch student data.");
@@ -72,19 +64,18 @@ const DailyReportMahasiswaPage = ({ params }: PageProps) => {
 
         setStudent(currentStudent);
 
-        // Fetch evaluasi data
         const evalResponse = await fetch(`/api/evaluasi`);
         if (!evalResponse.ok) throw new Error("Failed to fetch evaluasi data.");
         const evaluations: IEvaluasiDailyReport[] = await evalResponse.json();
-        
+
         setEvaluasiData(evaluations);
 
-        // Match evaluations to reports
-        const matchedReports = currentStudent.reports.map((report: IDailyReport) => {
-          const matchedEvaluation = evaluations.find(
-            (evaluasi) =>
-              evaluasi.dailyReportId?.toString() === report._id?.toString()
-          );
+        const matchedReports = currentStudent.reports.map(
+          (report: IDailyReport) => {
+            const matchedEvaluation = evaluations.find(
+              (evaluasi) =>
+                evaluasi.dailyReportId?.toString() === report._id?.toString()
+            );
             return {
               ...report,
               status: matchedEvaluation?.status || "Belum dievaluasi",
@@ -116,7 +107,6 @@ const DailyReportMahasiswaPage = ({ params }: PageProps) => {
     setSelectedTaskIndex(taskIndex);
     setIsReviewModalOpen(true);
   };
-
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -165,8 +155,8 @@ const DailyReportMahasiswaPage = ({ params }: PageProps) => {
   });
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-5xl">
-      <div className="max-w-6xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden mt-14 lg:my-0">
+    <div className="container mx-auto px-4 py-8">
+      <div className="mx-auto bg-white rounded-2xl shadow-xl overflow-hidden mt-14 lg:my-0">
         {/* Title */}
         <div className="bg-gradient-to-r from-cyan-100 to-blue-100 p-4">
           <h1 className="text-center text-sm sm:text-base lg:text-lg font-bold text-gray-800">
@@ -175,17 +165,16 @@ const DailyReportMahasiswaPage = ({ params }: PageProps) => {
         </div>
 
         {/* Profile Card */}
-        <div className="p-8">
+        <div className="lg:mx-4 lg:mt-4 p-8">
           <div className="flex flex-col md:flex-row items-center gap-8">
             {/* Avatar */}
-            <div className="relative">
+            <div className="relative lg:mr-4">
               <div className="w-40 h-40 sm:w-50 sm:h-50 rounded-full border-4 border-[#A2E2E8] bg-[#9FD8E4] flex items-center justify-center">
                 <span className="text-3xl sm:text-4xl font-bold text-white">
                   {getInitials(student.nama)}
                 </span>
               </div>
             </div>
-
             {/* Profile Details */}
             <div className="flex-1 w-full">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -284,17 +273,15 @@ const DailyReportMahasiswaPage = ({ params }: PageProps) => {
                         {task.task}
                       </td>
                       <td className="col-span-2 py-4 px-4 sm:px-6 text-xs sm:text-sm text-gray-600">
-                        
-                          <span
-                            className={`inline-block px-3 sm:px-4 py-1 rounded-full text-xs sm:text-sm font-medium ${
-                              task.status === "Diterima"
-                                ? "bg-green-100 text-green-600"
-                                : "bg-red-100 text-red-600"
-                            }`}
-                          >
-                            {task.status}
-                          </span>
-                      
+                        <span
+                          className={`inline-block px-3 sm:px-4 py-1 rounded-full text-xs sm:text-sm font-medium ${
+                            task.status === "Diterima"
+                              ? "bg-green-100 text-green-600"
+                              : "bg-red-100 text-red-600"
+                          }`}
+                        >
+                          {task.status}
+                        </span>
                       </td>
                     </tr>
                   ))}

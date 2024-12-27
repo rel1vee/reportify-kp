@@ -95,7 +95,7 @@ const RiwayatBimbinganPage = () => {
 
   if (!mahasiswaData) {
     return (
-      <div className="flex h-screen bg-white items-center justify-center">
+      <div className="flex h-screen items-center justify-center">
         <div className="text-xl font-bold text-gray-600">
           Update profile kamu terlebih dahulu...
         </div>
@@ -105,28 +105,30 @@ const RiwayatBimbinganPage = () => {
 
   if (error) {
     return (
-      <div className="flex h-screen bg-white items-center justify-center">
+      <div className="flex h-screen items-center justify-center">
         <div className="text-xl font-bold text-red-600">Error: {error}</div>
       </div>
     );
   }
 
   return (
-    <div className="flex-1 h-screen overflow-y-auto w-full bg-white">
+    <div className="flex-1 h-screen w-full overflow-y-auto">
       <div className="px-7 lg:px-8 pt-16 lg:pt-0">
         <div className="my-8">
-          <h1 className="text-xl sm:text-2xl font-bold">Bimbingan Kerja Praktik</h1>
+          <h1 className="text-xl sm:text-2xl font-bold">
+            Bimbingan Kerja Praktik
+          </h1>
           <p className="text-[#C5C5C5]">{currentDate}</p>
         </div>
         {/* Unified layout for all screen sizes */}
-        <div className="bg-[#D9F9FF] rounded-[20px] p-4 mb-8">
-          <table className="w-full min-w-full table-auto">
+        <div className="bg-[#D9F9FF] h-auto overflow-y-auto rounded-[20px] p-4 mb-8">
+          <table className="w-full min-w-full text-left table-auto">
             <thead>
-              <tr className="text-left">
-                <th className="py-4 px-4 border-b-2 border-gray-600 font-semibold text-base lg:text-lg whitespace-nowrap">
+              <tr>
+                <th className="w-3/4 p-4 border-b-2 border-gray-600 font-semibold text-xs sm:text-sm whitespace-nowrap">
                   Tanggal
                 </th>
-                <th className="py-4 px-8 border-b-2 border-gray-600 font-semibold text-base lg:text-lg text-right whitespace-nowrap">
+                <th className="w-1/6 p-4 text-center border-b-2 border-gray-600 font-semibold text-xs sm:text-sm whitespace-nowrap">
                   Aksi
                 </th>
               </tr>
@@ -136,12 +138,12 @@ const RiwayatBimbinganPage = () => {
                 (bimbingan: IBimbingan, index: number) => (
                   <tr
                     key={index}
-                    className="border-t-2 border-sky-100 transition-colors"
+                    className="border-t-2 text-left border-sky-100 transition-colors"
                   >
-                    <td className="py-4 px-4 text-sm lg:text-base text-gray-600">
+                    <td className="p-4 text-xs sm:text-sm text-gray-600">
                       {formatDate(bimbingan.tanggal.toString())}
                     </td>
-                    <td className="py-3 px-2 text-sm lg:text-base text-right">
+                    <td className="p-4 text-xs sm:text-sm text-center">
                       <button
                         className="py-1 px-3 text-white rounded-xl inline-flex items-center justify-center gap-2 bg-[#2C707B] hover:bg-[#225158] font-medium focus:outline-none transition-colors"
                         onClick={() => handleOpenBimbinganModal(bimbingan)}

@@ -18,6 +18,7 @@ interface IDailyReport {
 
 interface IEvaluasiDailyReport {
   dailyReportId?: string;
+  nip: string;
   status?: string;
   komentar?: string;
 }
@@ -70,7 +71,7 @@ const ReviewModal = ({
       setError(null);
       fetchEvaluasi();
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen, dailyReport]);
 
   const startEditing = () => {
@@ -165,19 +166,36 @@ const ReviewModal = ({
     if (!dailyReport?._id) return;
 
     try {
+      // Get user email from localStorage
+      const userEmail = localStorage.getItem("email");
+      if (!userEmail) {
+        throw new Error("User email not found");
+      }
+
+      // First try to fetch by email to get all evaluations
       const response = await fetch(
-        `/api/evaluasi?dailyreportId=${dailyReport._id}`
+        `/api/evaluasi?email=${encodeURIComponent(userEmail)}`
       );
 
       if (!response.ok) {
-        throw new Error("Gagal mengambil evaluasi");
+        throw new Error("Failed to fetch evaluations");
       }
 
-      const data = await response.json();
-      setEvaluasi(data);
+      const evaluations = await response.json();
 
-      const status = data?.status?.trim().toLowerCase();
-      setEvaluasiStatus(!status || status === "" ? "Belum" : data.status);
+      const matchingEvaluation = evaluations.find(
+        (evaluation: IEvaluasiDailyReport) =>
+          evaluation.dailyReportId === dailyReport._id
+      );
+
+      if (matchingEvaluation) {
+        setEvaluasi(matchingEvaluation);
+        const status = matchingEvaluation.status?.trim() || "Belum";
+        setEvaluasiStatus(status === "" ? "Belum" : status);
+      } else {
+        setEvaluasi(null);
+        setEvaluasiStatus("Belum");
+      }
     } catch (error) {
       console.error("Error fetching evaluasi:", error);
       setEvaluasiStatus("Belum");
@@ -224,7 +242,9 @@ const ReviewModal = ({
             </h2>
             <div
               className={`${
-                evaluasiStatus === "Diterima" ? "bg-[#99CC33]" : "bg-[#FFCC00]"
+                evaluasiStatus === "Diterima"
+                  ? "bg-[#99CC33]/80"
+                  : "bg-[#FFCC00]/80"
               } p-4 rounded-xl flex justify-between lg:justify-center items-center text-xs sm:text-sm sm:mr-8 lg:mr-6`}
             >
               <p className="mr-1">
@@ -325,7 +345,7 @@ const ReviewModal = ({
             </div>
 
             {/* Agenda Description */}
-            <div className="bg-[#D9F9FF] p-4 sm:p-6 rounded-xl h-auto ">
+            <div className="bg-[#D9F9FF] shadow-md p-4 sm:p-6 rounded-xl h-auto ">
               {isSubmitting && (
                 <div className="absolute inset-0 bg-gray-200 bg-opacity-50 flex items-center justify-center rounded-xl">
                   <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#2C707B]"></div>
@@ -389,7 +409,7 @@ const ReviewModal = ({
               </div>
 
               {dailyReport.agenda?.map((ag, index) => (
-                <div key={index} className="mb-4 mt-4">
+                <div key={index} className="mt-8">
                   {index === 0 && (
                     <p className="font-semibold mb-2 text-sm">
                       {formatDate(dailyReport.tanggal.toString())}
@@ -473,15 +493,21 @@ const ReviewModal = ({
             {/* Evaluasi Agenda Section */}
             <div className="flex justify-between items-start -mb-4">
               <h3 className="text-xs sm:text-sm text-gray-500">
-                Evaluasi Agenda
+                EVALUASI AGENDA
               </h3>
             </div>
-            <div className="bg-white border-4 border-[#9FD8E4] p-4 rounded-xl">
+            <div
+              className={`bg-white shadow-md border-2 ${
+                evaluasiStatus === "Diterima"
+                  ? "border-[#99CC33]"
+                  : "border-[#FFCC00]"
+              } p-4 rounded-xl`}
+            >
               <p className="text-gray-700 text-xs sm:text-sm mt-2">
                 {evaluasi?.komentar ? (
                   evaluasi.komentar
                 ) : (
-                  <span className="text-gray-500">Belum ada Evaluasi</span>
+                  <span className="text-gray-500">Belum Di Evaluasi...</span>
                 )}
               </p>
             </div>

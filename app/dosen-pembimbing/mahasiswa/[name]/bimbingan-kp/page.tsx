@@ -16,10 +16,13 @@ interface MahasiswaWithPopulatedBimbingan
 
 const BimbinganKPPage = ({ params }: { params: Promise<{ name: string }> }) => {
   const { name } = use(params);
-  const [student, setStudent] = useState<MahasiswaWithPopulatedBimbingan | null>(null);
+  const [student, setStudent] =
+    useState<MahasiswaWithPopulatedBimbingan | null>(null);
   const [isBimbinganKPModalOpen, setIsBimbinganKPModalOpen] = useState(false);
   const [isBimbinganModalOpen, setIsBimbinganModalOpen] = useState(false);
-  const [selectedBimbingan, setSelectedBimbingan] = useState<IBimbingan | null>(null);
+  const [selectedBimbingan, setSelectedBimbingan] = useState<IBimbingan | null>(
+    null
+  );
   const [loading, setLoading] = useState(true);
 
   const getInitials = (nama?: string) => {
@@ -34,11 +37,11 @@ const BimbinganKPPage = ({ params }: { params: Promise<{ name: string }> }) => {
     const fetchStudentData = async () => {
       try {
         const response = await fetch(`/api/mahasiswa?email=${name}`);
-        if (!response.ok) throw new Error('Failed to fetch student data');
+        if (!response.ok) throw new Error("Failed to fetch student data");
         const data = await response.json();
         setStudent(data);
       } catch (error) {
-        console.error('Error fetching student data:', error);
+        console.error("Error fetching student data:", error);
       } finally {
         setLoading(false);
       }
@@ -46,7 +49,6 @@ const BimbinganKPPage = ({ params }: { params: Promise<{ name: string }> }) => {
 
     fetchStudentData();
   }, [name]);
-
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -62,11 +64,10 @@ const BimbinganKPPage = ({ params }: { params: Promise<{ name: string }> }) => {
     setIsBimbinganKPModalOpen(true);
   };
 
-
-  if (loading || !student) return <Loading/>;
+  if (loading || !student) return <Loading />;
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-5xl">
+    <div className="container mx-auto px-4 lg:px-8 py-8 pt-20 lg:pt-8">
       <div className="bg-white shadow-lg rounded-2xl overflow-hidden">
         <div className="bg-gradient-to-r from-cyan-100 to-blue-100 p-4">
           <h1 className="text-center text-sm sm:text-base lg:text-lg font-bold text-gray-800">
@@ -74,9 +75,9 @@ const BimbinganKPPage = ({ params }: { params: Promise<{ name: string }> }) => {
           </h1>
         </div>
 
-        <div className="bg-white rounded-xl p-6 mb-8">
+        <div className="bg-white rounded-xl p-6 lg:mt-4 lg:mx-4">
           <div className="flex flex-col md:flex-row items-center gap-6">
-            <div className="relative">
+            <div className="relative lg:mr-4">
               <div className="w-40 h-40 sm:w-50 sm:h-50 rounded-full border-4 border-[#A2E2E8] bg-[#9FD8E4] flex items-center justify-center">
                 <span className="text-3xl sm:text-4xl font-bold text-white">
                   {getInitials(student.nama)}
@@ -90,7 +91,9 @@ const BimbinganKPPage = ({ params }: { params: Promise<{ name: string }> }) => {
                   <User className="text-cyan-600" />
                   <div>
                     <p className="text-sm text-gray-500">Nama Mahasiswa</p>
-                    <p className="font-semibold text-gray-800">{student.nama}</p>
+                    <p className="font-semibold text-gray-800">
+                      {student.nama}
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-center space-x-3">
@@ -104,47 +107,53 @@ const BimbinganKPPage = ({ params }: { params: Promise<{ name: string }> }) => {
                   <User className="text-cyan-600" />
                   <div>
                     <p className="text-sm text-gray-500">Dosen Pembimbing</p>
-                    <p className="font-semibold text-gray-800">{student.dosenPembimbing}</p>
+                    <p className="font-semibold text-gray-800">
+                      {student.dosenPembimbing}
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-center space-x-3">
                   <User className="text-cyan-600" />
                   <div>
                     <p className="text-sm text-gray-500">Pembimbing Instansi</p>
-                    <p className="font-semibold text-gray-800">{student.pembimbingInstansi}</p>
+                    <p className="font-semibold text-gray-800">
+                      {student.pembimbingInstansi}
+                    </p>
                   </div>
                 </div>
-                {/* <div className="flex items-center space-x-3 md:col-span-2">
-                  <Mail className="text-cyan-600" />
-                  <div>
-                    <p className="text-sm text-gray-500">Email</p>
-                    <p className="font-semibold text-gray-800">{student.email}</p>
-                  </div>
-                </div> */}
               </div>
             </div>
           </div>
         </div>
 
         <div className="p-6 bg-white-50">
-          <h2 className="text-xl font-bold text-center mb-4 text-gray-800">Riwayat Bimbingan</h2>
+          <h2 className="text-xl font-bold text-center mb-4 text-gray-800">
+            Riwayat Bimbingan
+          </h2>
           <div className="bg-[#D9F9FF] rounded-xl shadow-md overflow-hidden h-auto overflow-y-auto">
             <table className="w-full">
               <thead className="bg-[#F0F9FF]">
                 <tr>
-                  <th className="py-3 px-4 text-left font-semibold">Tanggal</th>
-                  <th className="py-3 px-4 text-right font-semibold">Aksi</th>
+                  <th className="w-3/4 py-3 px-4 text-left font-semibold">
+                    Tanggal
+                  </th>
+                  <th className="w-1/12 py-3 px-4 text-center font-semibold">
+                    Aksi
+                  </th>
                 </tr>
               </thead>
               <tbody>
                 {student.bimbingan.map((bimbingan, index) => (
-                  <tr key={index} className="border-b border-gray-100 transition-colors">
+                  <tr
+                    key={index}
+                    className="border-b border-gray-100 transition-colors"
+                  >
                     <td className="py-3 px-4 text-gray-700">
                       {formatDate(bimbingan.tanggal.toString())}
                     </td>
-                    <td className="py-3 px-4 text-right">
+                    <td className="py-3 px-4 text-center">
                       <button
-                        className="text-teal-600 hover:text-teal-800 font-medium px-3 py-1 rounded-full hover:bg-teal-50 transition-colors"
+                        className="text-teal-600 hover:text-teal-800 font-medium px-3 py-1 rounded-full bg-teal-50 transition-colors"
                         onClick={() => {
                           setSelectedBimbingan(bimbingan);
                           setIsBimbinganModalOpen(true);
@@ -158,7 +167,7 @@ const BimbinganKPPage = ({ params }: { params: Promise<{ name: string }> }) => {
               </tbody>
             </table>
           </div>
-          
+
           <div className="flex justify-center mt-4">
             <button
               className="flex items-center bg-teal-600 text-white 
@@ -173,7 +182,6 @@ const BimbinganKPPage = ({ params }: { params: Promise<{ name: string }> }) => {
         </div>
       </div>
 
-      {/* Modals */}
       {/* Modals */}
       {isBimbinganModalOpen && selectedBimbingan && (
         <BimbinganModal
@@ -191,10 +199,10 @@ const BimbinganKPPage = ({ params }: { params: Promise<{ name: string }> }) => {
         <AddBimbinganModal
           isOpen={isBimbinganKPModalOpen}
           onClose={() => setIsBimbinganKPModalOpen(false)}
+          emailMahasiswa={student.email}
         />
       )}
     </div>
-
   );
 };
 

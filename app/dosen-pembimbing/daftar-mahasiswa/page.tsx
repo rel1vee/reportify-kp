@@ -35,11 +35,20 @@ interface Student {
   instansi: string;
   pembimbingInstansi: string;
   dosenPembimbing: string;
-  mulaiKP: Date;
-  selesaiKP: Date;
+  mulaiKP: string;
+  selesaiKP: string;
   bimbingan: Bimbingan[];
   reports: DailyReport[];
 }
+
+const ProgressBar = ({ value }: { value: number }) => (
+  <div className="w-full bg-gray-200 rounded-full h-2">
+    <div
+      className="bg-[#2C707B] h-2 rounded-full transition-all duration-300"
+      style={{ width: `${Math.min(Math.max(value, 0), 100)}%` }}
+    />
+  </div>
+);
 
 const DaftarMahasiswaBimbinganPage = () => {
   const router = useRouter();
@@ -101,6 +110,43 @@ const DaftarMahasiswaBimbinganPage = () => {
     return words.length > 1 ? words[0][0] + words[1][0] : words[0][0];
   };
 
+  const calculateProgress = (student: Student): number => {
+    const startDate = new Date(student.mulaiKP);
+    const endDate = new Date(student.selesaiKP);
+    const today = new Date();
+
+    if (today < startDate) return 0;
+    if (today > endDate) return 100;
+
+    const totalDays = Math.ceil(
+      (endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24)
+    );
+    const daysPassed = Math.ceil(
+      (today.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24)
+    );
+
+    return Math.round((daysPassed / totalDays) * 100);
+  };
+
+  const getPendingBimbinganCount = (student: Student): number => {
+    return student.bimbingan.filter((b) => b.status === "pending").length;
+  };
+
+  const getSemester = (nim: string): number => {
+    const year = parseInt(nim.substring(1, 3));
+    const currentYear = new Date().getFullYear() % 100;
+    const semester = (currentYear - year) * 2 + 1;
+    return semester > 0 ? semester : 1;
+  };
+
+  const formatDate = (dateString: string): string => {
+    return new Date(dateString).toLocaleDateString("id-ID", {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    });
+  };
+
   if (loading) {
     return <Loading />;
   }
@@ -119,16 +165,15 @@ const DaftarMahasiswaBimbinganPage = () => {
   return (
     <div className="px-7 lg:px-8 pt-16 lg:pt-0">
       <div className="flex items-center justify-between my-8">
-        <h2 className="text-xl font-bold">
-          Daftar Mahasiswa Bimbingan KP
-        </h2>
+        <h2 className="text-xl font-bold">Daftar Mahasiswa Bimbingan KP</h2>
         <div className="relative">
           <input
             type="text"
-            placeholder="Cari mahasiswa disini..."
+            placeholder="Cari mahasiswa, NIM, atau Instansi.."
             value={searchQuery}
             onChange={handleSearchChange}
-            className="px-4 py-2 pl-10 text-gray-700 bg-[#D9D9D9] rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-96 px-4 py-2 pl-10 text-gray-700 bg-white border border-gray-300 rounded-full 
+                     focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
           />
           <svg
             className="absolute left-3 top-1/2 transform -translate-y-1/2"
@@ -146,35 +191,81 @@ const DaftarMahasiswaBimbinganPage = () => {
         </div>
       </div>
 
-      <div className="h-auto">
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+      <div className="overflow-y-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {filteredStudents.length > 0 ? (
             filteredStudents.map((student) => {
+              const progress = calculateProgress(student);
+              const pendingCount = getPendingBimbinganCount(student);
               return (
                 <div
                   key={student._id}
                   onClick={() => handleCardClick(student.email)}
-                  className="flex items-center bg-[#D9F9FF] p-6 rounded-[20px] shadow-md hover:shadow-lg  relative cursor-pointer hover:bg-[#C5F2FF] transition-colors flex-grow"
+                  className="bg-[#D9F9FF] p-6 rounded-[20px] shadow hover:shadow-md transition-all duration-300 
+                           cursor-pointer relative group border border-transparent"
                 >
-                  <div className="flex items-center justify-center w-[75px] h-[75px] bg-[#9FD8E4] rounded-full text-white text-2xl font-semibold mr-5">
-                    {getInitials(student.nama)}
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="text-xl font-bold mb-1">{student.nama}</h3>
-                    <p className="text-gray-600 mb-1">{student.nim}</p>
-                    <p className="text-gray-600">{student.instansi}</p>
-                  </div>
-                  {student.reports?.length > 0 && (
-                    <div className="absolute top-2 right-2 bg-[#2C707B] text-white text-xs font-semibold px-2 py-1 rounded-full">
-                      {student.reports.length}+
+                  <div className="flex items-start space-x-4">
+                    <div className="flex-shrink-0">
+                      <div
+                        className="flex items-center justify-center w-16 h-16 bg-[#9FD8E4] rounded-full 
+                                    text-white text-xl font-semibold shadow-sm"
+                      >
+                        {getInitials(student.nama)}
+                      </div>
                     </div>
-                  )}
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-start justify-between mb-1">
+                        <h3 className="text-lg font-bold truncate text-gray-800">
+                          {student.nama}
+                        </h3>
+                        {pendingCount > 0 && (
+                          <span
+                            className="inline-flex items-center justify-center bg-red-500 text-white 
+                                         text-xs font-semibold px-2 py-1 rounded-full min-w-[20px]"
+                          >
+                            {pendingCount}
+                          </span>
+                        )}
+                      </div>
+                      <div className="space-y-2 mb-3">
+                        <p className="text-gray-600 text-sm">
+                          {student.nim} • Semester {getSemester(student.nim)}
+                        </p>
+                        <p className="text-gray-700 text-sm font-medium">
+                          {student.instansi}
+                        </p>
+                      </div>
+                      <div className="space-y-1.5">
+                        <div className="flex justify-end text-sm">
+                          <span className="text-gray-800 font-medium">
+                            {progress}%
+                          </span>
+                        </div>
+                        <ProgressBar value={progress} />
+                        <div className="flex justify-between text-xs text-gray-500 mt-1">
+                          <span>{formatDate(student.mulaiKP)}</span>
+                          <span>{formatDate(student.selesaiKP)}</span>
+                        </div>
+                      </div>
+                      {/* <div className="mt-3 text-sm text-gray-600">
+                        <p className="truncate">
+                          Pembimbing: {student.dosenPembimbing}
+                        </p>
+                      </div> */}
+                    </div>
+                  </div>
+                  <div
+                    className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity 
+                                duration-300 text-sm text-[#2C707B] font-medium"
+                  >
+                    Lihat Detail →
+                  </div>
                 </div>
               );
             })
           ) : (
             <div className="col-span-2 text-center py-8 text-gray-500">
-              Tidak ada mahasiswa bimbingan yang ditemukan.
+              Tidak ada mahasiswa yang ditemukan...
             </div>
           )}
         </div>

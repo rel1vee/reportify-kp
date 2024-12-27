@@ -149,7 +149,7 @@ const DailyReportPage = () => {
     if (userEmail) {
       fetchData();
     }
-  });
+  }, []);
 
   const handleRowClick = (taskIndex: number) => {
     setSelectedTaskIndex(taskIndex);
@@ -190,7 +190,7 @@ const DailyReportPage = () => {
 
   if (!mahasiswaData) {
     return (
-      <div className="flex h-screen bg-white items-center justify-center">
+      <div className="flex h-screen items-center justify-center">
         <div className="text-xl font-bold text-gray-600">
           Update profile kamu terlebih dahulu...
         </div>
@@ -200,7 +200,7 @@ const DailyReportPage = () => {
 
   if (error) {
     return (
-      <div className="flex h-screen bg-white items-center justify-center">
+      <div className="flex h-screen items-center justify-center">
         <div className="text-xl font-bold text-red-600">Error: {error}</div>
       </div>
     );
@@ -211,7 +211,7 @@ const DailyReportPage = () => {
     : [];
 
   return (
-    <div className="flex-1 h-screen overflow-y-auto w-full bg-white">
+    <div className="flex-1 h-screen overflow-y-auto w-full">
       <div style={{ display: "none" }}>
         <CetakLaporan
           ref={printRef}
@@ -233,23 +233,18 @@ const DailyReportPage = () => {
             Cetak Daily Report
           </button>
         </div>
-        {/* Rest of the existing rendering code */}
-        <div
-          className={`${
-            tasks.length > 5 ? "h-[555px] overflow-y-auto" : "h-auto"
-          } bg-[#D9F9FF] p-4 rounded-[20px] mb-8`}
-        >
+        <div className="overflow-y-auto h-auto bg-[#D9F9FF] p-4 rounded-[20px] mb-8">
           <div className="bg-[#D9F9FF] rounded-xl overflow-hidden">
-            <table className="w-full text-left table-fixed">
+            <table className="w-full text-left table-auto">
               <thead>
                 <tr className="bg-[#D9F9FF]">
-                  <th className="w-1/4 py-4 px-4 sm:px-6 border-b-2 border-gray-600 font-semibold text-xs sm:text-sm tracking-wider">
+                  <th className="w-1/4 p-4 border-b-2 border-gray-600 font-semibold text-xs sm:text-sm tracking-wider">
                     Tanggal
                   </th>
-                  <th className="w-1/2 py-4 px-4 sm:px-6 border-b-2 border-gray-600 font-semibold text-xs sm:text-sm tracking-wider">
+                  <th className="w-1/2 p-4 border-b-2 border-gray-600 font-semibold text-xs sm:text-sm tracking-wider">
                     Agenda
                   </th>
-                  <th className="w-1/4 py-4 px-4 sm:px-12 border-b-2 border-gray-600 font-semibold text-xs sm:text-sm tracking-wider">
+                  <th className="w-1/6 p-4 border-b-2 text-center border-gray-600 font-semibold text-xs sm:text-sm tracking-wider">
                     Status
                   </th>
                 </tr>
@@ -261,13 +256,13 @@ const DailyReportPage = () => {
                     onClick={() => handleRowClick(index)}
                     className="hover:bg-[#A1D1DD] transition-colors duration-150 cursor-pointer"
                   >
-                    <td className="py-4 px-4 sm:px-6 text-xs sm:text-sm text-gray-600">
+                    <td className="p-4 text-xs sm:text-sm text-gray-600">
                       {task.date}
                     </td>
-                    <td className="py-4 px-4 sm:px-6 text-xs sm:text-sm text-gray-600">
+                    <td className="p-4 text-xs sm:text-sm text-gray-600">
                       {task.task}
                     </td>
-                    <td className="py-4 px-4 sm:px-12">
+                    <td className="p-4 text-center">
                       <span
                         className={`inline-block px-3 sm:px-4 py-1 rounded-full text-xs sm:text-sm font-medium ${
                           task.status === "Diterima"

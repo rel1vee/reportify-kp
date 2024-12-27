@@ -1,6 +1,7 @@
 import MongoDB from "@/libs/mongodb";
 import { NextResponse } from "next/server";
 import Bimbingan from "@/models/Bimbingan";
+import Mahasiswa from "@/models/Mahasiswa";
 
 interface BimbinganValidation {
   nip: string;
@@ -60,7 +61,24 @@ class BimbinganController {
       if (validationError) {
         return NextResponse.json({ message: validationError }, { status: 400 });
       }
-      const newBimbingan = await Bimbingan.create(data);
+
+      const mahasiswa = await Mahasiswa.findByEmail(data.emailMahasiswa);
+      if (!mahasiswa) {
+        return NextResponse.json(
+          { message: "Mahasiswa tidak ditemukan" },
+          { status: 404 }
+        );
+      }
+
+      const newBimbingan = await Bimbingan.create({
+        nip: data.nip,
+        tanggal: data.tanggal,
+        komentar: data.komentar,
+        status: data.status,
+      });
+
+      await Mahasiswa.addBimbingan(mahasiswa.email, newBimbingan._id);
+
       return NextResponse.json(newBimbingan, { status: 201 });
     } catch (error) {
       console.error("Error creating Bimbingan:", error);

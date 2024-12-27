@@ -15,7 +15,8 @@ interface MahasiswaWithPopulatedBimbingan
 
 const BimbinganKPPage = ({ params }: { params: Promise<{ name: string }> }) => {
   const { name } = use(params);
-  const [student, setStudent] = useState<MahasiswaWithPopulatedBimbingan | null>(null);
+  const [student, setStudent] =
+    useState<MahasiswaWithPopulatedBimbingan | null>(null);
   const [isBimbinganModalOpen, setIsBimbinganModalOpen] = useState(false);
   const [selectedBimbingan, setSelectedBimbingan] = useState<IBimbingan | null>(
     null
@@ -60,7 +61,7 @@ const BimbinganKPPage = ({ params }: { params: Promise<{ name: string }> }) => {
   if (loading || !student) return <Loading />;
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-5xl">
+    <div className="container mx-auto px-4 lg:px-8 py-8 pt-20 lg:pt-8">
       <div className="bg-white shadow-lg rounded-2xl overflow-hidden">
         <div className="bg-gradient-to-r from-cyan-100 to-blue-100 p-4">
           <h1 className="text-center text-sm sm:text-base lg:text-lg font-bold text-gray-800">
@@ -68,9 +69,9 @@ const BimbinganKPPage = ({ params }: { params: Promise<{ name: string }> }) => {
           </h1>
         </div>
 
-        <div className="bg-white rounded-xl p-6 mb-8">
+        <div className="bg-white rounded-xl p-6 lg:mt-4 lg:mx-4">
           <div className="flex flex-col md:flex-row items-center gap-6">
-            <div className="relative">
+            <div className="relative lg:mr-4">
               <div className="w-40 h-40 sm:w-50 sm:h-50 rounded-full border-4 border-[#A2E2E8] bg-[#9FD8E4] flex items-center justify-center">
                 <span className="text-3xl sm:text-4xl font-bold text-white">
                   {getInitials(student.nama)}
@@ -114,13 +115,6 @@ const BimbinganKPPage = ({ params }: { params: Promise<{ name: string }> }) => {
                     </p>
                   </div>
                 </div>
-                {/* <div className="flex items-center space-x-3 md:col-span-2">
-                  <Mail className="text-cyan-600" />
-                  <div>
-                    <p className="text-sm text-gray-500">Email</p>
-                    <p className="font-semibold text-gray-800">{student.email}</p>
-                  </div>
-                </div> */}
               </div>
             </div>
           </div>
@@ -134,8 +128,12 @@ const BimbinganKPPage = ({ params }: { params: Promise<{ name: string }> }) => {
             <table className="w-full">
               <thead className="bg-[#F0F9FF]">
                 <tr>
-                  <th className="py-3 px-4 text-left font-semibold">Tanggal</th>
-                  <th className="py-3 px-4 text-right font-semibold">Aksi</th>
+                  <th className="w-3/4 py-3 px-4 text-left font-semibold">
+                    Tanggal
+                  </th>
+                  <th className="w-1/12 py-3 px-4 text-center font-semibold">
+                    Aksi
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -147,9 +145,9 @@ const BimbinganKPPage = ({ params }: { params: Promise<{ name: string }> }) => {
                     <td className="py-3 px-4 text-gray-700">
                       {formatDate(bimbingan.tanggal.toString())}
                     </td>
-                    <td className="py-3 px-4 text-right">
+                    <td className="py-3 px-4 text-center">
                       <button
-                        className="text-teal-600 hover:text-teal-800 font-medium px-3 py-1 rounded-full hover:bg-teal-50 transition-colors"
+                        className="text-teal-600 hover:text-teal-800 font-medium px-3 py-1 rounded-full bg-teal-50 transition-colors"
                         onClick={() => {
                           setSelectedBimbingan(bimbingan);
                           setIsBimbinganModalOpen(true);

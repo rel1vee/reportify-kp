@@ -38,11 +38,9 @@ const DashboardDosenPembimbingPage = () => {
         const response = await fetch(
           `/api/mahasiswa?dosenPembimbing=${dosenPembimbing}`
         );
-
         if (!response.ok) {
           throw new Error("Failed to fetch data");
         }
-
         const data = await response.json();
         setStudents(data);
       } catch (err) {
@@ -51,7 +49,6 @@ const DashboardDosenPembimbingPage = () => {
         setLoading(false);
       }
     };
-
     const today = new Date();
     const options: Intl.DateTimeFormatOptions = {
       weekday: "long",
@@ -60,12 +57,10 @@ const DashboardDosenPembimbingPage = () => {
       year: "numeric",
     };
     setCurrentDate(today.toLocaleDateString("id-ID", options));
-
     fetchData();
   }, [nama]);
 
   useEffect(() => {
-    // Animate progress bars when students data is loaded
     if (students.length > 0) {
       const timeouts = students.map((student, index) => {
         const progress = calculateProgress(student.mulaiKP, student.selesaiKP);
@@ -76,7 +71,6 @@ const DashboardDosenPembimbingPage = () => {
           }));
         }, index * 200);
       });
-
       return () => timeouts.forEach(clearTimeout);
     }
   }, [students]);
@@ -85,14 +79,12 @@ const DashboardDosenPembimbingPage = () => {
     const start = new Date(startDate);
     const end = new Date(endDate);
     const today = new Date();
-
     const totalDays = Math.ceil(
       (end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24)
     );
     const daysPassed = Math.ceil(
       (today.getTime() - start.getTime()) / (1000 * 60 * 60 * 24)
     );
-
     return Math.min(
       Math.max(Math.round((daysPassed / totalDays) * 100), 0),
       100
@@ -145,7 +137,6 @@ const DashboardDosenPembimbingPage = () => {
         <h1 className="text-3xl font-bold text-gray-800">Dashboard</h1>
         <p className="text-gray-600">{currentDate}</p>
       </div>
-
       <div className="bg-[#D9F9FF] p-8 rounded-[20px] mb-10">
         <h2 className="text-lg sm:text-xl font-semibold mb-3">
           Hi, <strong>{nama}</strong> 👋
@@ -156,24 +147,22 @@ const DashboardDosenPembimbingPage = () => {
           para mahasiswa bimbingan Anda. Mari bersama-sama memastikan setiap
           mahasiswa mencapai potensi terbaiknya dalam program Kerja Praktek ini.
         </p>
-        <p className="text-[#2C707B] font-medium mt-3">
+        {/* <p className="text-[#2C707B] font-medium mt-3">
           &quot;Membimbing dengan hati, menginspirasi dengan tindakan, dan
           membangun masa depan dengan ilmu.&quot;
-        </p>
+        </p> */}
       </div>
-
-      {/* Company and Student Internship Statistics */}
-      <div className="bg-[#D9F9FF] p-6 rounded-2xl shadow-lg mb-10">
-        {/* <h2 className="text-xl font-bold mb-6 text-gray-800">
+      {Object.entries(groupedStudents).map(
+        ([instansi, students], companyIdx) => (
+          <div
+            key={companyIdx}
+            className="bg-[#D9F9FF] p-6 rounded-2xl shadow-lg mb-10"
+          >
+            {/* <h2 className="text-xl font-bold mb-6 text-gray-800">
           Progress Mahasiswa Bimbingan KP Anda:
         </h2> */}
-        <div className="space-y-6">
-          {Object.entries(groupedStudents).map(
-            ([instansi, students], companyIdx) => (
-              <div
-                key={companyIdx}
-                className="p-6 bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow"
-              >
+            <div className="space-y-6">
+              <div className="p-6 bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow">
                 <h3 className="text-lg font-bold mb-4">{instansi}</h3>
                 <ul className="space-y-3">
                   {students.map((student) => {
@@ -219,10 +208,10 @@ const DashboardDosenPembimbingPage = () => {
                   })}
                 </ul>
               </div>
-            )
-          )}
-        </div>
-      </div>
+            </div>
+          </div>
+        )
+      )}
     </div>
   );
 };

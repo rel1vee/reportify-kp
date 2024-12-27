@@ -205,7 +205,7 @@ const AddTaskModal = ({ isOpen, onClose }: AddTaskModalProps) => {
     if (incompleteAgendas.length > 0) {
       setNotification({
         message: "Setiap agenda harus memiliki minimal satu gambar.",
-        type: "error",
+        type: "warning",
       });
       return;
     }
@@ -262,7 +262,9 @@ const AddTaskModal = ({ isOpen, onClose }: AddTaskModalProps) => {
 
         setTimeout(() => {
           onClose();
-        }, 1000);
+        }, 2000);
+
+        window.location.reload();
       } else {
         setNotification({
           message: "Gagal meyimpan laporan.",
