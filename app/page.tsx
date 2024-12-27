@@ -115,7 +115,7 @@ const LandingPage = () => {
           transition={{ duration: 0.6 }}
           className="max-w-4xl text-center"
         >
-          <h2 className="text-3xl md:text-5xl font-extrabold mb-4 md:mb-6">
+          <h2 className="text-3xl md:text-5xl font-extrabold mb-6">
             Simplifikasi Daily Report Kerja Praktik
           </h2>
           <p className="text-base md:text-xl mb-6 md:mb-8 max-w-2xl mx-auto opacity-90">
@@ -129,7 +129,7 @@ const LandingPage = () => {
           >
             <button
               onClick={handleLogin}
-              className="justify-center w-3/4 md:w-1/2 px-4 md:px-6 py-2 md:py-3 rounded-full bg-white text-[#2C5F8D] flex items-center space-x-2 hover:bg-opacity-90 transition-all"
+              className="justify-center w-3/4 md:w-1/2 px-4 md:px-6 py-2 md:py-3 rounded-full bg-white text-[#2C5F8D] flex items-center gap-2 hover:bg-opacity-90 transition-all"
             >
               <span className="text-sm md:text-base">Mulai Sekarang</span>
               <ArrowRight size={18} />

@@ -492,208 +492,58 @@ export default function RootLayout({
         {children}
 
         {/* Profile Section */}
-        <div className="w-full lg:w-[300px] h-auto lg:h-screen p-5 bg-[#F6F6F6] text-center mt-2 lg:mt-0 overflow-y-auto">
-          <div className="flex flex-col relative">
-            {/* Button Edit Profile */}
-            <button
-              onClick={toggleModal}
-              className="items-center justify-start flex gap-2 hover:text-[#2C707B] font-semibold transition-all duration-300"
-            >
-              <Edit size={16} />
-              Profile
-            </button>
-            {/* Modal */}
-            {isEditOpen && (
-              <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50">
-                <div className="bg-white rounded-xl shadow-lg w-11/12 md:w-3/4 lg:w-2/3 p-6 h-[90%] relative overflow-y-auto">
-                  {/* Modal Header */}
-                  <div className="flex justify-between items-center pb-3 mb-2">
-                    <div className="flex justify-center items-center gap-3">
-                      <Book />
-                      <h2 className="text-2xl font-semibold text-gray-950">
-                        Lengkapi Data Berikut...
-                      </h2>
-                    </div>
-                    <button
-                      onClick={toggleModal}
-                      className="text-gray-600 hover:text-red-500 text-xl"
-                    >
-                      ✕
-                    </button>
-                  </div>
-                  {/* Form */}
-                  <form onSubmit={handleSubmit} className="space-y-4">
-                    {/* Judul KP */}
-                    <div>
-                      <label className="block text-sm py-2 text-start font-medium text-gray-600">
-                        Judul KP
-                      </label>
-                      <input
-                        type="text"
-                        name="judulKP"
-                        value={formData.judulKP}
-                        onChange={handleInputChange}
-                        placeholder="Masukkan Judul KP"
-                        className="w-full border rounded-xl px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
-                      />
-                    </div>
-                    {/* Instansi */}
-                    <div>
-                      <label className="block text-sm py-2 text-start font-medium text-gray-600">
-                        Instansi
-                      </label>
-                      <div className="relative">
-                        <select
-                          name="instansi"
-                          className="w-full border rounded-xl px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
-                          value={formData.instansi}
-                          onChange={handleInstansiChange}
-                        >
-                          <option value="">Pilih Instansi</option>
-                          {Array.isArray(instansiList) &&
-                            instansiList.map((instansi) => (
-                              <option
-                                key={instansi._id}
-                                value={instansi.instansi}
-                              >
-                                {instansi.instansi}
-                              </option>
-                            ))}
-                        </select>
-                      </div>
-                    </div>
-                    {/* Pembimbing Instansi */}
-                    <div>
-                      <label className="block text-sm py-2 text-start font-medium text-gray-600">
-                        Pembimbing Instansi
-                      </label>
-                      <div className="relative">
-                        <select
-                          name="pembimbingInstansi"
-                          value={formData.pembimbingInstansi}
-                          onChange={handleInputChange}
-                          className="w-full border rounded-xl px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
-                        >
-                          <option value="">Pilih Pembimbing Instansi</option>
-                          {Array.isArray(pembimbingInstansiList) &&
-                            pembimbingInstansiList.map((pembimbing) => (
-                              <option
-                                key={pembimbing._id}
-                                value={pembimbing.nama}
-                              >
-                                {pembimbing.nama}
-                              </option>
-                            ))}
-                        </select>
-                      </div>
-                    </div>
-                    {/* Dosen Pembimbing */}
-                    <div>
-                      <label className="block text-sm py-2 text-start font-medium text-gray-600">
-                        Dosen Pembimbing
-                      </label>
-                      <div className="relative">
-                        <select
-                          name="dosenPembimbing"
-                          value={formData.dosenPembimbing}
-                          onChange={handleInputChange}
-                          className="w-full border rounded-xl px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none overflow-y-auto"
-                        >
-                          <option value="">Pilih Dosen Pembimbing</option>
-                          {Array.isArray(dosenPembimbingList) &&
-                            dosenPembimbingList.map((dosen) => (
-                              <option key={dosen._id} value={dosen.nama}>
-                                {dosen.nama}
-                              </option>
-                            ))}
-                        </select>
-                      </div>
-                    </div>
-                    {/* Mulai KP */}
-                    <div>
-                      <label className="block text-sm py-2 text-start font-medium text-gray-600">
-                        Tanggal Mulai KP
-                      </label>
-                      <input
-                        name="mulaiKP"
-                        type="date"
-                        value={formData.mulaiKP}
-                        onChange={handleInputChange}
-                        className="w-full border rounded-xl px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
-                      />
-                    </div>
-                    {/* Selesai KP */}
-                    <div>
-                      <label className="block text-sm py-2 text-start font-medium text-gray-600">
-                        Tanggal Selesai KP
-                      </label>
-                      <input
-                        name="selesaiKP"
-                        type="date"
-                        value={formData.selesaiKP}
-                        onChange={handleInputChange}
-                        className="w-full border rounded-xl px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
-                      />
-                    </div>
-                    {/* Submit Button */}
-                    <div className="flex justify-end pt-4">
-                      <button
-                        type="button"
-                        onClick={toggleModal}
-                        className="px-4 py-2 text-gray-600 hover:text-red-500"
-                      >
-                        Batal
-                      </button>
-                      <button
-                        type="submit"
-                        className="flex ml-2 px-4 py-2 bg-[#2C707B] hover:bg-[#225158] gap-2 text-white items-center justify-center rounded-xl transition-all duration-300"
-                      >
-                        <Save size={18} />
-                        Simpan
-                      </button>
-                    </div>
-                  </form>
+        <div className="flex flex-col relative w-full lg:w-[300px] h-auto lg:h-screen p-5 bg-[#F6F6F6] text-center mt-2 lg:mt-0 overflow-y-auto">
+          <div className="flex-1">
+            <div>
+              {/* Button Edit Profile */}
+              <button
+                onClick={toggleModal}
+                className="items-center justify-start flex gap-2 hover:text-[#2C707B] font-semibold transition-all duration-300"
+              >
+                <Edit size={16} />
+                Profile
+              </button>
+              <div className="my-4 justify-center flex">
+                <div className="flex items-center justify-center w-[120px] h-[120px] rounded-full bg-[#9FD8E4] text-white font-bold text-3xl">
+                  {getInitials(nama)}
                 </div>
               </div>
-            )}
-            <div className="my-4 justify-center flex">
-              <div className="flex items-center justify-center w-[120px] h-[120px] rounded-full bg-[#9FD8E4] text-white font-bold text-3xl">
-                {getInitials(nama)}
-              </div>
-            </div>
-            <h3 className="font-bold text-lg">{nama}</h3>
-            <p className="text-[#C5C5C5] text-sm mt-1">{nim}</p>
-            <p className="text-[#C5C5C5] text-sm mt-1">{profil.instansi}</p>
-          </div>
-          {/* Supervisor Section */}
-          <div className="text-left">
-            <h3 className="text-lg mt-6 mb-2">
-              <b>Supervisor</b>
-            </h3>
-            <div className="flex items-center bg-[#FFBF5F] rounded-xl p-3 mb-2">
-              <div className="flex items-center justify-center w-[45px] h-[45px] lg:w-[55px] lg:h-[55px] rounded-full bg-[#9FD8E4] text-white mr-3 font-bold text-md">
-                {getInitials(profil.pembimbingInstansi)}
-              </div>
-              <div>
-                <h4 className="font-bold text-sm">
-                  {profil.pembimbingInstansi}
-                </h4>
-                <p className="text-xs">Pembimbing Instansi</p>
-              </div>
-            </div>
-            <div className="flex items-center bg-[#FFBF5F] rounded-xl p-3 mb-2">
-              <div className="flex items-center justify-center w-[45px] h-[45px] lg:w-[55px] lg:h-[55px] rounded-full bg-[#9FD8E4] text-white mr-3 font-bold text-md">
-                {getInitials(profil.dosenPembimbing)}
-              </div>
-              <div>
-                <h4 className="font-bold text-sm">{profil.dosenPembimbing}</h4>
-                <p className="text-xs">Dosen Pembimbing</p>
+              <h3 className="font-bold text-lg">{nama}</h3>
+              <p className="text-[#C5C5C5] text-sm mt-1">{nim}</p>
+              <p className="text-[#C5C5C5] text-sm mt-1">{profil.instansi}</p>
+              {/* Supervisor Section */}
+              <div className="text-left">
+                <h3 className="text-lg mt-6 mb-2">
+                  <b>Supervisor</b>
+                </h3>
+                <div className="flex items-center bg-[#FFBF5F] rounded-xl p-3 mb-2">
+                  <div className="flex items-center justify-center w-[45px] h-[45px] lg:w-[55px] lg:h-[55px] rounded-full bg-[#9FD8E4] text-white mr-3 font-bold text-md">
+                    {getInitials(profil.pembimbingInstansi)}
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-sm">
+                      {profil.pembimbingInstansi}
+                    </h4>
+                    <p className="text-xs">Pembimbing Instansi</p>
+                  </div>
+                </div>
+                <div className="flex items-center bg-[#FFBF5F] rounded-xl p-3 mb-2">
+                  <div className="flex items-center justify-center w-[45px] h-[45px] lg:w-[55px] lg:h-[55px] rounded-full bg-[#9FD8E4] text-white mr-3 font-bold text-md">
+                    {getInitials(profil.dosenPembimbing)}
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-sm">
+                      {profil.dosenPembimbing}
+                    </h4>
+                    <p className="text-xs">Dosen Pembimbing</p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
           {/* Report Button with Modal */}
-          <div className="mt-16 text-left">
-            <h3 className="text-lg mb-2">
+          <div className="text-left">
+            <h3 className="text-lg mt-6 mb-2">
               <b>Buat Laporan</b>
             </h3>
             <div
@@ -722,6 +572,154 @@ export default function RootLayout({
           </div>
         </div>
       </div>
+      {/* Modal */}
+      {isEditOpen && (
+        <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-xl shadow-lg w-11/12 md:w-3/4 lg:w-2/3 p-6 h-[90%] relative overflow-y-auto">
+            {/* Modal Header */}
+            <div className="flex justify-between items-center pb-3 mb-2">
+              <div className="flex justify-center items-center gap-3">
+                <Book />
+                <h2 className="text-2xl font-semibold text-gray-950">
+                  Lengkapi Data Berikut...
+                </h2>
+              </div>
+              <button
+                onClick={toggleModal}
+                className="text-gray-600 hover:text-red-500 text-xl"
+              >
+                ✕
+              </button>
+            </div>
+            {/* Form */}
+            <form onSubmit={handleSubmit} className="space-y-4">
+              {/* Judul KP */}
+              <div>
+                <label className="block text-sm py-2 text-start font-medium text-gray-600">
+                  Judul KP
+                </label>
+                <input
+                  type="text"
+                  name="judulKP"
+                  value={formData.judulKP}
+                  onChange={handleInputChange}
+                  placeholder="Masukkan Judul KP"
+                  className="w-full border rounded-xl px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
+                />
+              </div>
+              {/* Instansi */}
+              <div>
+                <label className="block text-sm py-2 text-start font-medium text-gray-600">
+                  Instansi
+                </label>
+                <div className="relative">
+                  <select
+                    name="instansi"
+                    className="w-full border rounded-xl px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
+                    value={formData.instansi}
+                    onChange={handleInstansiChange}
+                  >
+                    <option value="">Pilih Instansi</option>
+                    {Array.isArray(instansiList) &&
+                      instansiList.map((instansi) => (
+                        <option key={instansi._id} value={instansi.instansi}>
+                          {instansi.instansi}
+                        </option>
+                      ))}
+                  </select>
+                </div>
+              </div>
+              {/* Pembimbing Instansi */}
+              <div>
+                <label className="block text-sm py-2 text-start font-medium text-gray-600">
+                  Pembimbing Instansi
+                </label>
+                <div className="relative">
+                  <select
+                    name="pembimbingInstansi"
+                    value={formData.pembimbingInstansi}
+                    onChange={handleInputChange}
+                    className="w-full border rounded-xl px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
+                  >
+                    <option value="">Pilih Pembimbing Instansi</option>
+                    {Array.isArray(pembimbingInstansiList) &&
+                      pembimbingInstansiList.map((pembimbing) => (
+                        <option key={pembimbing._id} value={pembimbing.nama}>
+                          {pembimbing.nama}
+                        </option>
+                      ))}
+                  </select>
+                </div>
+              </div>
+              {/* Dosen Pembimbing */}
+              <div>
+                <label className="block text-sm py-2 text-start font-medium text-gray-600">
+                  Dosen Pembimbing
+                </label>
+                <div className="relative">
+                  <select
+                    name="dosenPembimbing"
+                    value={formData.dosenPembimbing}
+                    onChange={handleInputChange}
+                    className="w-full border rounded-xl px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none overflow-y-auto"
+                  >
+                    <option value="">Pilih Dosen Pembimbing</option>
+                    {Array.isArray(dosenPembimbingList) &&
+                      dosenPembimbingList.map((dosen) => (
+                        <option key={dosen._id} value={dosen.nama}>
+                          {dosen.nama}
+                        </option>
+                      ))}
+                  </select>
+                </div>
+              </div>
+              {/* Mulai KP */}
+              <div>
+                <label className="block text-sm py-2 text-start font-medium text-gray-600">
+                  Tanggal Mulai KP
+                </label>
+                <input
+                  name="mulaiKP"
+                  type="date"
+                  value={formData.mulaiKP}
+                  onChange={handleInputChange}
+                  className="w-full border rounded-xl px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
+                />
+              </div>
+              {/* Selesai KP */}
+              <div>
+                <label className="block text-sm py-2 text-start font-medium text-gray-600">
+                  Tanggal Selesai KP
+                </label>
+                <input
+                  name="selesaiKP"
+                  type="date"
+                  value={formData.selesaiKP}
+                  onChange={handleInputChange}
+                  className="w-full border rounded-xl px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
+                />
+              </div>
+              {/* Submit Button */}
+              <div className="flex justify-end pt-4">
+                <button
+                  type="button"
+                  onClick={toggleModal}
+                  className="px-4 py-2 text-gray-600 hover:text-red-500"
+                >
+                  Batal
+                </button>
+                <button
+                  type="submit"
+                  className="flex ml-2 px-4 py-2 bg-[#2C707B] hover:bg-[#225158] gap-2 text-white items-center justify-center rounded-xl transition-all duration-300"
+                >
+                  <Save size={18} />
+                  Simpan
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </>
   );
 }
