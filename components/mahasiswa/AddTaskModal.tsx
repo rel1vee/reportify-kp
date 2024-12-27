@@ -189,14 +189,7 @@ const AddTaskModal = ({ isOpen, onClose }: AddTaskModalProps) => {
   };
 
   const handleSubmit = async () => {
-    if (
-      !Agenda.waktuMulai ||
-      !Agenda.waktuSelesai ||
-      !Agenda.judulAgenda ||
-      !Agenda.deskripsiAgenda ||
-      !Agenda.files ||
-      Agenda.files.length === 0
-    ) {
+    if (agendaList.length === 0 && !Agenda.judulAgenda) {
       setNotification({
         message: "Minimal tambahkan satu agenda.",
         type: "warning",
@@ -204,6 +197,18 @@ const AddTaskModal = ({ isOpen, onClose }: AddTaskModalProps) => {
       return;
     }
 
+    const agendasToSubmit = [...agendaList, Agenda];
+    const incompleteAgendas = agendasToSubmit.filter(
+      (agenda) => !agenda.files || agenda.files.length === 0
+    );
+
+    if (incompleteAgendas.length > 0) {
+      setNotification({
+        message: "Setiap agenda harus memiliki minimal satu gambar.",
+        type: "error",
+      });
+      return;
+    }
     // const validAgendas = agendaList.filter(
     //   (agenda) =>
     //     agenda.judulAgenda &&
@@ -221,13 +226,15 @@ const AddTaskModal = ({ isOpen, onClose }: AddTaskModalProps) => {
     const requestBody = {
       email: email,
       tanggal: Agenda.date,
-      agenda: agendaList.map((agenda) => ({
-        waktuMulai: agenda.waktuMulai,
-        waktuSelesai: agenda.waktuSelesai,
-        judulAgenda: agenda.judulAgenda,
-        deskripsiAgenda: agenda.deskripsiAgenda,
-        files: agenda.files,
-      })),
+      agenda: await Promise.all(
+        [...agendaList, Agenda].map(async (agenda) => ({
+          waktuMulai: agenda.waktuMulai,
+          waktuSelesai: agenda.waktuSelesai,
+          judulAgenda: agenda.judulAgenda,
+          deskripsiAgenda: agenda.deskripsiAgenda,
+          files: agenda.files,
+        }))
+      ),
     };
 
     try {
