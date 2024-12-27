@@ -189,9 +189,16 @@ const AddTaskModal = ({ isOpen, onClose }: AddTaskModalProps) => {
   };
 
   const handleSubmit = async () => {
-    if (agendaList.length === 0 && !Agenda.judulAgenda) {
+    if (
+      !Agenda.waktuMulai ||
+      !Agenda.waktuSelesai ||
+      !Agenda.judulAgenda ||
+      !Agenda.deskripsiAgenda ||
+      !Agenda.files ||
+      Agenda.files.length === 0
+    ) {
       setNotification({
-        message: "Minimal isi satu agenda.",
+        message: "Minimal tambahkan satu agenda.",
         type: "warning",
       });
       return;
