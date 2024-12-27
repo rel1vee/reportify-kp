@@ -59,14 +59,14 @@ const DailyReportPage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [evaluasiData, setEvaluasiData] = useState<IEvaluasiDailyReport[]>([]);
-  const [userEmail, setUserEmail] = useState<string>("");
+  // const [userEmail, setUserEmail] = useState<string>("");
 
-  useEffect(() => {
-    const email = localStorage.getItem("email");
-    if (email) {
-      setUserEmail(email);
-    }
-  }, []);
+  // useEffect(() => {
+  //   const email = localStorage.getItem("email");
+  //   if (email) {
+  //     setUserEmail(email);
+  //   }
+  // }, []);
 
   const printRef = useRef<HTMLDivElement>(null);
 
@@ -116,6 +116,8 @@ const DailyReportPage = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      const userEmail = localStorage.getItem("email") || "";
+
       try {
         const mahasiswaResponse = await fetch(
           `/api/mahasiswa?email=${encodeURIComponent(userEmail)}`
@@ -145,10 +147,8 @@ const DailyReportPage = () => {
       }
     };
 
-    if (userEmail) {
-      fetchData();
-    }
-  }, [userEmail]);
+    fetchData();
+  }, []);
 
   const handleRowClick = (taskIndex: number) => {
     setSelectedTaskIndex(taskIndex);
