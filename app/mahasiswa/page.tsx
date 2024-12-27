@@ -141,7 +141,7 @@ const DashboardMahasiswaPage = () => {
           </div>
         </div>
         {/* Progress Section */}
-        <div className="bg-[#D9F9FF] p-4 sm:p-6 rounded-[20px] shadow mb-10">
+        <div className="bg-[#D9F9FF] p-4 sm:p-6 rounded-[20px] shadow mb-10 overflow-x-auto">
           <div className="flex sm:flex-row justify-between items-center mb-4">
             <h3 className="text-base sm:text-lg font-semibold">
               Progress Kerja Praktik
@@ -160,7 +160,7 @@ const DashboardMahasiswaPage = () => {
             </div>
           </div>
           {/* Timeline */}
-          <div className="relative overflow-x-auto pb-4">
+          <div className="relative pb-4">
             <div className="absolute h-1 bg-white left-0 right-0 top-3 sm:top-4" />
             <div className="relative flex justify-between px-2 sm:px-4">
               {timelinePoints.map(({ day, isActive }, index) => (

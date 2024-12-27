@@ -115,9 +115,8 @@ const DailyReportPage = () => {
   };
 
   useEffect(() => {
+    const userEmail = localStorage.getItem("email") || "";
     const fetchData = async () => {
-      const userEmail = localStorage.getItem("email") || "";
-
       try {
         const mahasiswaResponse = await fetch(
           `/api/mahasiswa?email=${encodeURIComponent(userEmail)}`
@@ -147,8 +146,10 @@ const DailyReportPage = () => {
       }
     };
 
-    fetchData();
-  }, []);
+    if (userEmail) {
+      fetchData();
+    }
+  });
 
   const handleRowClick = (taskIndex: number) => {
     setSelectedTaskIndex(taskIndex);
