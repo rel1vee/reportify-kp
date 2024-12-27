@@ -70,7 +70,7 @@ const BimbinganKPPage = ({ params }: { params: Promise<{ name: string }> }) => {
         </div>
 
         <div className="bg-white rounded-xl p-6 lg:mt-4 lg:mx-4">
-          <div className="flex flex-col md:flex-row items-center gap-6">
+          <div className="flex flex-col md:flex-row items-center gap-8">
             <div className="relative lg:mr-4">
               <div className="w-40 h-40 sm:w-50 sm:h-50 rounded-full border-4 border-[#A2E2E8] bg-[#9FD8E4] flex items-center justify-center">
                 <span className="text-3xl sm:text-4xl font-bold text-white">

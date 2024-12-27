@@ -165,7 +165,7 @@ const DailyReportMahasiswaPage = ({ params }: PageProps) => {
         </div>
 
         {/* Profile Card */}
-        <div className="lg:mx-4 lg:mt-4 p-8">
+        <div className="lg:mx-4 lg:mt-4 p-6">
           <div className="flex flex-col md:flex-row items-center gap-8">
             {/* Avatar */}
             <div className="relative lg:mr-4">
@@ -254,7 +254,7 @@ const DailyReportMahasiswaPage = ({ params }: PageProps) => {
                     <th className="w-1/2 py-4 px-4 sm:px-6 border-b-2 border-gray-600 font-semibold text-xs sm:text-sm tracking-wider">
                       All Task
                     </th>
-                    <th className="w-1/4 py-4 px-4 sm:px-6 border-b-2 border-gray-600 font-semibold text-xs sm:text-sm tracking-wider">
+                    <th className="w-1/4 py-4 px-4 text-center sm:px-6 border-b-2 border-gray-600 font-semibold text-xs sm:text-sm tracking-wider">
                       Status
                     </th>
                   </tr>
@@ -272,7 +272,7 @@ const DailyReportMahasiswaPage = ({ params }: PageProps) => {
                       <td className="py-4 px-4 sm:px-6 text-xs sm:text-sm text-gray-900">
                         {task.task}
                       </td>
-                      <td className="col-span-2 py-4 px-4 sm:px-6 text-xs sm:text-sm text-gray-600">
+                      <td className="col-span-2 py-4 px-4 sm:px-6 text-xs sm:text-sm text-gray-600 text-center">
                         <span
                           className={`inline-block px-3 sm:px-4 py-1 rounded-full text-xs sm:text-sm font-medium ${
                             task.status === "Diterima"

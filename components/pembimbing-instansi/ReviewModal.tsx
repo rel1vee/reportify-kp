@@ -14,8 +14,8 @@ interface IDailyReport {
   _id: string;
   tanggal: Date | string;
   agenda?: IAgenda[];
-  status?: string;  
-  komentar?: string;  
+  status?: string;
+  komentar?: string;
 }
 
 interface IEvaluasiDailyReport {
@@ -56,10 +56,20 @@ const formatDate = (dateString: string) => {
 const CloseButton = ({ onClose }: { onClose: () => void }) => (
   <button
     onClick={onClose}
-    className="absolute top-5 lg:top-10 right-4 text-gray-600 hover:text-gray-800"
+    className="absolute right-4 text-gray-600 hover:text-red-500"
   >
-    <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+    <svg
+      className="w-5 h-5 sm:w-6 sm:h-6"
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2"
+        d="M6 18L18 6M6 6l12 12"
+      />
     </svg>
   </button>
 );
@@ -69,7 +79,10 @@ const StudentInfo = ({ studentInfo }: { studentInfo: IMahasiswa }) => (
     <InfoField label="NAMA MAHASISWA" value={studentInfo.nama} />
     <InfoField label="NIM" value={studentInfo.nim} />
     <InfoField label="DOSEN PEMBIMBING" value={studentInfo.dosenPembimbing} />
-    <InfoField label="PEMBIMBING INSTANSI" value={studentInfo.pembimbingInstansi} />
+    <InfoField
+      label="PEMBIMBING INSTANSI"
+      value={studentInfo.pembimbingInstansi}
+    />
   </div>
 );
 
@@ -84,7 +97,11 @@ const StatusIndicator = ({ status }: { status: string }) => (
   <div className="mb-4 sm:mb-6">
     <h3 className="text-xs sm:text-sm text-gray-500 mb-1">STATUS</h3>
     <div className="flex items-center gap-2">
-      <div className={`w-2 h-2 rounded-full ${status === "Diterima" ? "bg-green-500" : "bg-red-500"}`} />
+      <div
+        className={`w-2 h-2 rounded-full ${
+          status === "Diterima" ? "bg-green-500" : "bg-red-500"
+        }`}
+      />
       <p className="font-medium text-sm">{status}</p>
     </div>
   </div>
@@ -114,7 +131,7 @@ const Documentation = ({ agenda }: { agenda?: IAgenda[] }) => (
 );
 
 const AgendaList = ({ dailyReport }: { dailyReport: IDailyReport }) => (
-  <div className="bg-[#D9F9FF] p-4 sm:p-6 rounded-xl h-auto">
+  <div className="bg-[#D9F9FF] p-4 sm:p-6 rounded-xl h-auto shadow-md">
     {dailyReport.agenda?.map((ag, index) => (
       <div key={index} className="mb-4 mt-4">
         {index === 0 && (
@@ -132,24 +149,33 @@ const AgendaList = ({ dailyReport }: { dailyReport: IDailyReport }) => (
   </div>
 );
 
-const EvaluasiSection = ({ evaluasi }: { evaluasi: IEvaluasiDailyReport | null }) => (
+const EvaluasiSection = ({
+  evaluasi,
+}: {
+  evaluasi: IEvaluasiDailyReport | null;
+}) => (
   <div>
     <div className="flex justify-between items-start">
-      <h3 className="text-xs sm:text-sm text-gray-500 mb-1">Evaluasi Agenda</h3>
+      <h3 className="text-xs sm:text-sm text-gray-500 mb-1">EVALUASI AGENDA</h3>
     </div>
-    <div className="bg-white border-4 border-[#9FD8E4] p-4 rounded-xl">
+    <div
+      className={`bg-white shadow-md border-2 ${
+        evaluasi?.status === "Diterima"
+          ? "border-[#99CC33]"
+          : "border-[#FFCC00]"
+      } p-4 rounded-xl`}
+    >
       <p className="text-gray-700 text-xs sm:text-sm">
         {evaluasi?.komentar ? (
           evaluasi.komentar
         ) : (
-          <span className="text-gray-500">Belum ada Evaluasi.</span>
+          <span className="text-gray-500">Belum Di Evaluasi...</span>
         )}
       </p>
     </div>
   </div>
 );
 
-// Main Component
 const ReviewModal = ({
   isOpen,
   onClose,
@@ -157,7 +183,8 @@ const ReviewModal = ({
   studentInfo,
 }: ReviewModalProps) => {
   const [evaluasi, setEvaluasi] = useState<IEvaluasiDailyReport | null>(null);
-  const [evaluasiStatus, setEvaluasiStatus] = useState<string>("Belum dievaluasi");
+  const [evaluasiStatus, setEvaluasiStatus] =
+    useState<string>("Belum dievaluasi");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -167,8 +194,8 @@ const ReviewModal = ({
       // Use the evaluasi data that's already attached to the dailyReport
       const evaluasiData = {
         dailyReportId: dailyReport._id,
-        status: dailyReport.status || "Belum dievaluasi",
-        komentar: dailyReport.komentar || ""
+        status: dailyReport.status || "Belum di evaluasi",
+        komentar: dailyReport.komentar || "",
       };
 
       setEvaluasi(evaluasiData);
@@ -184,12 +211,12 @@ const ReviewModal = ({
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4">
       <div className="bg-white rounded-xl w-full max-w-4xl relative shadow-lg max-h-[90vh] overflow-auto">
         {/* Header */}
-        <div className="p-4 sm:p-6 border-b sticky top-0 bg-white z-10">
-          <CloseButton onClose={onClose} />
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
-            <h2 className="text-lg sm:text-2xl font-bold mb-4 sm:mb-0">
+        <div className="p-4 sm:p-6 border-b sticky bg-white z-10">
+          <div className="flex items-center justify-between">
+            <div className="text-lg sm:text-2xl font-bold">
               Review Daily Report
-            </h2>
+            </div>
+            <CloseButton onClose={onClose} />
           </div>
         </div>
 
@@ -221,7 +248,9 @@ const ReviewModal = ({
 
               {/* Agenda Description */}
               <div className="flex justify-between items-start -mb-4">
-                <h2 className="text-xs sm:text-sm text-gray-500">DESKRIPSI AGENDA</h2>
+                <h2 className="text-xs sm:text-sm text-gray-500">
+                  DESKRIPSI AGENDA
+                </h2>
               </div>
               <AgendaList dailyReport={dailyReport} />
 

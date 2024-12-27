@@ -106,10 +106,10 @@ const DetailMahasiswaPage = ({
         </div>
 
         {/* Profile Card */}
-        <div className="p-6">
-          <div className="flex flex-col md:flex-row items-center gap-6">
+        <div className="lg:mx-4 lg:mt-2 p-6">
+          <div className="flex flex-col md:flex-row items-center gap-8">
             {/* Avatar */}
-            <div className="relative px-6 py-2">
+            <div className="relative lg:mr-4">
               <div className="w-40 h-40 sm:w-50 sm:h-50 rounded-full border-4 border-[#A2E2E8] bg-[#9FD8E4] flex items-center justify-center">
                 <span className="text-3xl sm:text-4xl font-bold text-white">
                   {getInitials(profileData.nama)}
@@ -156,15 +156,6 @@ const DetailMahasiswaPage = ({
                     </p>
                   </div>
                 </div>
-                {/* <div className="flex items-center space-x-3 md:col-span-2">
-                  <Mail className="text-cyan-600" />
-                  <div>
-                    <p className="text-sm text-gray-500">Email</p>
-                    <p className="font-semibold text-gray-800">
-                      {profileData.email}
-                    </p>
-                  </div>
-                </div> */}
               </div>
             </div>
           </div>
@@ -176,7 +167,9 @@ const DetailMahasiswaPage = ({
             {/* Daily Report Card */}
             <div
               onClick={() =>
-                router.push(`/dosen-pembimbing/mahasiswa/${profileData._id}/daily-report`)
+                router.push(
+                  `/dosen-pembimbing/mahasiswa/${profileData._id}/daily-report`
+                )
               }
               className="bg-gradient-to-b from-[#9FD8E4] via-[#9FD8E4] to-[#F8F8F8] p-6 rounded-xl shadow-sm hover:shadow-md hover:scale-102 transform transition-all duration-200 ease-in-out cursor-pointer"
             >
@@ -201,7 +194,9 @@ const DetailMahasiswaPage = ({
             {/* Bimbingan KP Card */}
             <div
               onClick={() =>
-                router.push(`/dosen-pembimbing/mahasiswa/${profileData.email}/bimbingan-kp`)
+                router.push(
+                  `/dosen-pembimbing/mahasiswa/${profileData.email}/bimbingan-kp`
+                )
               }
               className="bg-gradient-to-b from-[#9FD8E4] via-[#9FD8E4] to-[#F8F8F8] p-6 rounded-xl shadow-sm hover:shadow-md hover:scale-102 transform transition-all duration-200 ease-in-out cursor-pointer"
             >
