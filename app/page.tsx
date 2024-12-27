@@ -77,7 +77,7 @@ const LandingPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-bl from-[#2C5F8D] to-[#1A4B5F] flex flex-col text-white">
+    <div className="h-screen bg-gradient-to-bl from-[#2C5F8D] to-[#1A4B5F] flex flex-col text-white">
       <motion.nav
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}

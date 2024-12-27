@@ -204,24 +204,24 @@ const AddTaskModal = ({ isOpen, onClose }: AddTaskModalProps) => {
       return;
     }
 
-    const validAgendas = agendaList.filter(
-      (agenda) =>
-        agenda.judulAgenda &&
-        agenda.deskripsiAgenda &&
-        agenda.waktuMulai &&
-        agenda.waktuSelesai
-    );
+    // const validAgendas = agendaList.filter(
+    //   (agenda) =>
+    //     agenda.judulAgenda &&
+    //     agenda.deskripsiAgenda &&
+    //     agenda.waktuMulai &&
+    //     agenda.waktuSelesai
+    // );
 
-    if (Agenda.judulAgenda) {
-      validAgendas.push(Agenda);
-    }
+    // if (Agenda.judulAgenda) {
+    //   validAgendas.push(Agenda);
+    // }
 
     const email = localStorage.getItem("email");
 
     const requestBody = {
       email: email,
       tanggal: Agenda.date,
-      agenda: validAgendas.map((agenda) => ({
+      agenda: agendaList.map((agenda) => ({
         waktuMulai: agenda.waktuMulai,
         waktuSelesai: agenda.waktuSelesai,
         judulAgenda: agenda.judulAgenda,
@@ -285,7 +285,7 @@ const AddTaskModal = ({ isOpen, onClose }: AddTaskModalProps) => {
         />
       )}
       <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-40">
-        <div className="bg-white rounded-xl py-4 px-6 w-[90%] md:max-w-[1000px] h-[90vh] overflow-y-auto">
+        <div className="bg-white rounded-xl py-4 px-6 w-[90%] md:max-w-[1000px] h-auto lg:h-[90vh] overflow-y-auto">
           <button
             onClick={onClose}
             className="w-full text-gray-500 hover:text-red-500 text-end"
