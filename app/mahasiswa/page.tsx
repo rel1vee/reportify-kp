@@ -162,7 +162,7 @@ const DashboardMahasiswaPage = () => {
           {/* Timeline */}
           <div className="relative overflow-x-auto pb-4">
             <div className="absolute h-1 bg-white left-0 right-0 top-3 sm:top-4" />
-            <div className="relative flex justify-between min-w-[300px] sm:min-w-[500px] px-2 sm:px-4">
+            <div className="relative flex justify-between px-2 sm:px-4">
               {timelinePoints.map(({ day, isActive }, index) => (
                 <div key={index} className="flex flex-col items-center">
                   <div
@@ -175,7 +175,7 @@ const DashboardMahasiswaPage = () => {
                     {day}
                   </div>
                   <div
-                    className={`mt-2 text-xs sm:text-sm ${
+                    className={`mt-2 text-sm ${
                       isActive ? "text-gray-950" : "text-gray-300"
                     }`}
                   >

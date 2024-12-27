@@ -258,7 +258,7 @@ const AddTaskModal = ({ isOpen, onClose }: AddTaskModalProps) => {
     } catch (error) {
       if (error instanceof Error) {
         setNotification({
-          message: `Gagal menyimpan laporan: ${error.message}`,
+          message: `Error: ${error.message}`,
           type: "error",
         });
       }

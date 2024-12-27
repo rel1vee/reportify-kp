@@ -58,7 +58,7 @@ class EvaluasiDailyReportClass {
       },
       {
         $project: {
-          pembimbingInstansiId: 1,
+          nip: 1,
           komentar: 1,
           status: 1,
           dailyReportInfo: 1, // Menampilkan informasi DailyReport yang digabungkan

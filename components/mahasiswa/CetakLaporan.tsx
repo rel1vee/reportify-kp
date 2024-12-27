@@ -3,7 +3,7 @@ import React, { forwardRef, useEffect, useState } from "react";
 
 interface IEvaluasiDailyReport {
   dailyReportId?: string;
-  pembimbingInstansiId: string;
+  nip: string;
   komentar: string;
   status: string;
 }
@@ -52,11 +52,14 @@ const CetakLaporan = forwardRef<HTMLDivElement, CetakLaporanProps>(
       });
     };
 
+    const [nip, setNip] = useState<string | undefined>("");
+
     const mergedData = mahasiswaData.reports.map((report) => {
       const matchingEvaluasi = evaluasiData.find(
         (evaluasi) => evaluasi.dailyReportId === report._id
       );
 
+      setNip(matchingEvaluasi?.nip);
       const imgsrc =
         report.agenda?.reduce((acc, ag) => {
           return acc.concat(ag.files || []);
@@ -244,7 +247,7 @@ const CetakLaporan = forwardRef<HTMLDivElement, CetakLaporanProps>(
             <br />
             <br />
             <p>{mahasiswaData.pembimbingInstansi}</p>
-            <p>NIP.</p>
+            <p>NIP. {nip}</p>
           </div>
           <div className="pl-20 pr-4 py-4 text-start">
             <p>Pekanbaru, {currentDate} 2024</p>

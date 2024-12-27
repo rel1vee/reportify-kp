@@ -10,7 +10,7 @@ import CetakLaporan from "@/components/mahasiswa/CetakLaporan";
 
 interface IEvaluasiDailyReport {
   dailyReportId?: string;
-  pembimbingInstansiId: string;
+  nip: string;
   komentar: string;
   status: string;
 }

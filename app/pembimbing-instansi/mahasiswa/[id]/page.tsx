@@ -9,7 +9,7 @@ import WithAuth from "@/components/WithAuth";
 
 interface IEvaluasiDailyReport {
   dailyReportId?: string;
-  pembimbingInstansiId: string;
+  nip: string;
   komentar: string;
   status: string;
 }
