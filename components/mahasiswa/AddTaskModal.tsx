@@ -5,6 +5,7 @@ import { Save, Upload } from "lucide-react";
 import { CldUploadWidget } from "next-cloudinary";
 import { useState, useRef, ChangeEvent } from "react";
 import NotificationPopup from "@/components/NotificationPopUp";
+import { error } from "console";
 
 interface AddTaskModalProps {
   isOpen: boolean;
@@ -257,10 +258,12 @@ const AddTaskModal = ({ isOpen, onClose }: AddTaskModalProps) => {
           onClose();
         }, 1000);
       } else {
-        setNotification({
-          message: "Gagal menyimpan laporan.",
-          type: "error",
-        });
+        if (error instanceof Error) {
+          setNotification({
+            message: `Gagal meyimpan laporan: ${error.message}`,
+            type: "error",
+          });
+        }
       }
     } catch (error) {
       if (error instanceof Error) {
