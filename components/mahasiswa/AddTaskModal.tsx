@@ -245,6 +245,7 @@ const AddTaskModal = ({ isOpen, onClose }: AddTaskModalProps) => {
       });
 
       if (response.ok) {
+        
         setNotification({
           message: "Laporan berhasil disimpan.",
           type: "success",
@@ -260,11 +261,11 @@ const AddTaskModal = ({ isOpen, onClose }: AddTaskModalProps) => {
           files: [],
         });
 
-        setTimeout(() => {
-          onClose();
-        }, 6000);
+        // setTimeout(() => {
+        //   onClose();
+        // }, 6000);
 
-        window.location.reload();
+        // window.location.reload();
       } else {
         setNotification({
           message: "Gagal meyimpan laporan.",
