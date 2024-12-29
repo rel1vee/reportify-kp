@@ -73,7 +73,7 @@ const AddEvaluasiModal = ({
 
       setTimeout(() => {
         onClose();
-      }, 3000);
+      }, 6000);
 
       window.location.reload();
     } catch (error) {

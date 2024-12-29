@@ -188,7 +188,7 @@ export default function RootLayout({
 
         setTimeout(() => {
           toggleModal();
-        }, 3000);
+        }, 6000);
 
         window.location.reload();
       } else {
