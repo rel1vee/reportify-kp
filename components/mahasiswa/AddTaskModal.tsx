@@ -262,7 +262,7 @@ const AddTaskModal = ({ isOpen, onClose }: AddTaskModalProps) => {
 
         setTimeout(() => {
           onClose();
-        }, 3000);
+        }, 6000);
 
         window.location.reload();
       } else {
